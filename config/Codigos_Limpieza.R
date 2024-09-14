@@ -27,4 +27,9 @@ library(haven) # Para cargar el .sav
 # Cargamos la base de datos 
 
 datos <- read_sav("data/GPES-ELAB-GEBD-ENAHO-2023_BdBasePublica.sav")
+datos_con_tipo_de_varibles <- datos
+
+datos_con_tipo_de_varibles$A16B <- as_factor(datos_con_tipo_de_varibles$A16B)
+# Esta variable corresponde a los títulos o grado acádemico que tiene la unidad de estudio
+
 
