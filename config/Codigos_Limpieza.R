@@ -37,6 +37,12 @@ library(haven) # Para cargar el .sav
 datos <- read_sav("data/GPES-ELAB-GEBD-ENAHO-2023_BdBasePublica.sav")
 datos_con_tipo_de_varibles <- datos
 
+####################################
+
+# Variables Relacionadas con educación
+
+####################################
+
 datos_con_tipo_de_varibles$A13 <- as_factor(datos_con_tipo_de_varibles$A13)
 # Asistencia a educación formal 
 # Tasa de respuesta: 100%
@@ -78,28 +84,53 @@ datos_con_tipo_de_varibles$ForNoReg <- as_factor(datos_con_tipo_de_varibles$ForN
 datos_con_tipo_de_varibles$A21 <- as_factor(datos_con_tipo_de_varibles$A21)
 datos_con_tipo_de_varibles$A22A <- as_factor(datos_con_tipo_de_varibles$A22A)
 datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
-# Esta variable corresponde a los títulos o grado acádemico que tiene la unidad de estudio
 
-variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,
-                                                          A5,
-                                                          LugNac,
-                                                          A13,
-                                                          A14,
-                                                          A15A,
-                                                          A15B,
-                                                          A16B,
-                                                          A17,
-                                                          A18A,
-                                                          NivInst,
-                                                          Escolari,
-                                                          REZ_ESC,
-                                                          ForReg,
-                                                          A18A,
-                                                          A18B,
-                                                          A18C,
-                                                          A20A,
-                                                          ForNoReg,
-                                                          A21,
-                                                          A22A,
-                                                          A22B,
+
+####################################
+
+# Variables Relacionadas con ingreso o indicadores de condición socioeconómica
+
+####################################
+
+datos_con_tipo_de_varibles$RamaEmpPri <- as_factor(datos_con_tipo_de_varibles$RamaEmpPri)
+datos_con_tipo_de_varibles$np <- as_factor(datos_con_tipo_de_varibles$np)
+
+
+
+variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
+                                                          LugNac,    A13,
+                                                          A14,       A15A,
+                                                          A15B,      A16B,
+                                                          A17,       A18A,
+                                                          NivInst,   Escolari,
+                                                          REZ_ESC,   ForReg,
+                                                          A18A,      A18B,
+                                                          A18C,      A20A,
+                                                          ForNoReg,  A21,
+                                                          A22A,      A22B,
+                                                          np, # Socioeconomicas
+                                                          IPM_Pobreza,# A partir de acá faltan de limpiar
+                                                          IPM_Intensidad,
+                                                          ClasPubPriv,
+                                                          E13B,
+                                                          F13B,
+                                                          IPM_PS1,
+                                                          IPM_PS2,
+                                                          IPM_PS4,
+                                                          Q_ZON_IPCN,
+                                                          Q_REG_IPCN,
+                                                          Q_IPCN,
+                                                          ipbh, # Cuantitativas
+                                                          ipnh,
+                                                          ithb,
+                                                          ithn,
+                                                          ipcb,
+                                                          ipcn,
+                                                          isanh,
+                                                          ts,
+                                                          ot,
+                                                          ttmh,
+                                                          tnmh,
+                                                          cba,
+                                                          lp,
                                                           )
