@@ -59,12 +59,47 @@ datos_con_tipo_de_varibles$Escolari[datos_con_tipo_de_varibles$Escolari == 99] <
 # Tasa de respuesta: 100%
 sum(!is.na(datos_con_tipo_de_varibles$Escolari))/30540
 
-
+datos_con_tipo_de_varibles$A4 <- as_factor(datos_con_tipo_de_varibles$A4)
+datos_con_tipo_de_varibles$LugNac <- as_factor(datos_con_tipo_de_varibles$LugNac)
+datos_con_tipo_de_varibles$A15A <- as_factor(datos_con_tipo_de_varibles$A15A)
+datos_con_tipo_de_varibles$A15B <- as_factor(datos_con_tipo_de_varibles$A15B)
 datos_con_tipo_de_varibles$A17 <- as_factor(datos_con_tipo_de_varibles$A17)
-
 datos_con_tipo_de_varibles$A18A <- as_factor(datos_con_tipo_de_varibles$A18A)
-
 datos_con_tipo_de_varibles$A16B <- as_factor(datos_con_tipo_de_varibles$A16B)
+datos_con_tipo_de_varibles$REZ_ESC <- as_factor(datos_con_tipo_de_varibles$REZ_ESC)
+datos_con_tipo_de_varibles$ForReg <- as_factor(datos_con_tipo_de_varibles$ForReg)
+datos_con_tipo_de_varibles$A18A <- as_factor(datos_con_tipo_de_varibles$A18A)
+datos_con_tipo_de_varibles$A18B <- as_factor(datos_con_tipo_de_varibles$A18B)
+datos_con_tipo_de_varibles$A18C <- as_factor(datos_con_tipo_de_varibles$A18C)
+datos_con_tipo_de_varibles$A18C <- as_factor(datos_con_tipo_de_varibles$A18C)
+datos_con_tipo_de_varibles$A20A <- as_factor(datos_con_tipo_de_varibles$A20A)
+datos_con_tipo_de_varibles$A20A <- as_factor(datos_con_tipo_de_varibles$A20A)
+datos_con_tipo_de_varibles$ForNoReg <- as_factor(datos_con_tipo_de_varibles$ForNoReg)
+datos_con_tipo_de_varibles$A21 <- as_factor(datos_con_tipo_de_varibles$A21)
+datos_con_tipo_de_varibles$A22A <- as_factor(datos_con_tipo_de_varibles$A22A)
+datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
 # Esta variable corresponde a los títulos o grado acádemico que tiene la unidad de estudio
 
-
+variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,
+                                                          A5,
+                                                          LugNac,
+                                                          A13,
+                                                          A14,
+                                                          A15A,
+                                                          A15B,
+                                                          A16B,
+                                                          A17,
+                                                          A18A,
+                                                          NivInst,
+                                                          Escolari,
+                                                          REZ_ESC,
+                                                          ForReg,
+                                                          A18A,
+                                                          A18B,
+                                                          A18C,
+                                                          A20A,
+                                                          ForNoReg,
+                                                          A21,
+                                                          A22A,
+                                                          A22B,
+                                                          )
