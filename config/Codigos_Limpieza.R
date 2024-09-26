@@ -22,6 +22,7 @@ library(cowplot)
   library(usdata)
 library(openintro)
 library(haven) # Para cargar el .sav
+               # Para usar "as_factor()"
 
 ##############################################
 
@@ -94,7 +95,15 @@ datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
 
 datos_con_tipo_de_varibles$RamaEmpPri <- as_factor(datos_con_tipo_de_varibles$RamaEmpPri)
 datos_con_tipo_de_varibles$np <- as_factor(datos_con_tipo_de_varibles$np)
-
+datos_con_tipo_de_varibles$IPM_Pobreza <- as_factor(datos_con_tipo_de_varibles$IPM_Pobreza)
+datos_con_tipo_de_varibles$IPM_Intensidad <- as_factor(datos_con_tipo_de_varibles$IPM_Intensidad)
+datos_con_tipo_de_varibles$ClasPubPrivPri <- as_factor(datos_con_tipo_de_varibles$ClasPubPrivPri)
+datos_con_tipo_de_varibles$G3 <- as_factor(datos_con_tipo_de_varibles$G3)
+datos_con_tipo_de_varibles$IPM_PS2 <- as_factor(datos_con_tipo_de_varibles$IPM_PS2)
+datos_con_tipo_de_varibles$IPM_PS4 <- as_factor(datos_con_tipo_de_varibles$IPM_PS4)
+datos_con_tipo_de_varibles$Q_ZON_IPCN <- as_factor(datos_con_tipo_de_varibles$Q_ZON_IPCN)
+datos_con_tipo_de_varibles$Q_REG_IPCN <- as_factor(datos_con_tipo_de_varibles$Q_REG_IPCN)
+datos_con_tipo_de_varibles$Q_IPCN <- as_factor(datos_con_tipo_de_varibles$Q_IPCN)
 
 
 variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
@@ -109,13 +118,11 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           ForNoReg,  A21,
                                                           A22A,      A22B,
                                                           np, # Socioeconomicas
-                                                          IPM_Pobreza,# A partir de acá faltan de limpiar
+                                                          IPM_Pobreza,
                                                           IPM_Intensidad,
-                                                          ClasPubPriv,
-                                                          E13B,
-                                                          F13B,
-                                                          IPM_PS1,
-                                                          IPM_PS2,
+                                                          ClasPubPrivPri,
+                                                          G3,
+                                                          IPM_PS2, #Revisar sitio INEC respecto a esta variable
                                                           IPM_PS4,
                                                           Q_ZON_IPCN,
                                                           Q_REG_IPCN,
