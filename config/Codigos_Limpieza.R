@@ -95,6 +95,7 @@ datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
 
 datos_con_tipo_de_varibles$RamaEmpPri <- as_factor(datos_con_tipo_de_varibles$RamaEmpPri)
 datos_con_tipo_de_varibles$np <- as_factor(datos_con_tipo_de_varibles$np)
+datos_con_tipo_de_varibles$E1 <- as_factor(datos_con_tipo_de_varibles$E1)
 datos_con_tipo_de_varibles$IPM_Pobreza <- as_factor(datos_con_tipo_de_varibles$IPM_Pobreza)
 datos_con_tipo_de_varibles$IPM_Intensidad <- as_factor(datos_con_tipo_de_varibles$IPM_Intensidad)
 datos_con_tipo_de_varibles$ClasPubPrivPri <- as_factor(datos_con_tipo_de_varibles$ClasPubPrivPri)
@@ -118,6 +119,7 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           ForNoReg,  A21,
                                                           A22A,      A22B,
                                                           np, # Socioeconomicas
+                                                          E1,
                                                           IPM_Pobreza,
                                                           IPM_Intensidad,
                                                           ClasPubPrivPri,
