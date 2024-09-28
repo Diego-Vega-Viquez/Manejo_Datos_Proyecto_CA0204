@@ -179,7 +179,7 @@ datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
                                                   A16B, A17,
                                                   A20A, ForNoReg,
                                                   A22A,itpn,
-                                                  IPM_Pobreza, Q_IPCN,
-                                                  ipcn)
+                                                  np, IPM_Pobreza, 
+                                                  Q_IPCN, ipcn)
 
 datos_jc <- datos_jc %>% filter(A5 >= 18 & A5 <= 60)  
