@@ -10,6 +10,7 @@ install.packages("cowplot")
 install.packages("openintro")
 install.packages("cowplot")
 install.packages("ggridges")
+install.packages("treemap")
 
 library("digest")
 library("tibble")
@@ -24,6 +25,7 @@ library(openintro)
 library(haven) # Para cargar el .sav
 library(scales)
 library(ggridges) # Para usar geom_density_ridges
+library(treemap)
 
 datos_con_tipo_de_varibles %>%
   filter(!is.na(A16B)) %>%  # Excluye valores NA
@@ -101,8 +103,7 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)
   theme(legend.position = "none")
 
 #Grafico de pobreza segun nivel de instrucción
-datos_jc_filtrado <- datos_jc %>% filter(!is.na(np))
-datos_jc_filtrado %>% 
+datos_jc %>% filter(!is.na(np)) %>% 
   ggplot(aes(x = np, fill = NivInst)) +
   geom_bar(position = "fill") +
   labs(title = "Nivel de pobreza",
@@ -115,8 +116,7 @@ datos_jc_filtrado %>%
         axis.text.x = element_text(size = 8))  # Cambiar el tamaño del texto del eje x
 
 #Grafico de pobreza multidimensional segun nivel de instruccion
-datos_jc_filtrado <- datos_jc %>% filter(!is.na(IPM_Pobreza))
-datos_jc_filtrado %>% 
+datos_jc %>% filter(!is.na(IPM_Pobreza)) %>% 
   ggplot(aes(x = IPM_Pobreza, fill = NivInst)) +
   geom_bar(position = "fill") +
   labs(title = "Nivel de pobreza",
@@ -128,5 +128,32 @@ datos_jc_filtrado %>%
   theme(legend.text = element_text(size = 8),
         axis.text.x = element_text(size = 8))  # Cambiar el tamaño del texto del eje x
 
-  
-  
+#Numero de titulos obtenidos segun quintil de ingreso per capita
+datos_jc %>% filter(!is.na(A16B)) %>%
+  ggplot(aes(x = Q_IPCN, fill = A16B)) +
+  geom_bar(position = "dodge") +  # Colocar barras separadas dentro de cada cuartil
+  labs(title = "Número de títulos obtenidos",
+       subtitle = "Según quintil de ingreso per cápita",
+       x = NULL,  # Eliminar el título del eje x
+       y = NULL,  # Eliminar el título del eje y
+       fill = "Título obtenido") +  # Título de la leyenda
+  coord_polar() +  # Gráfico circular
+  scale_y_log10() +  # Aplicar la transformación de raíz cuadrada a la escala de y
+  cowplot::theme_cowplot() +
+  theme(legend.text = element_text(size = 8),  # Tamaño de texto de la leyenda
+        axis.text.x = element_text(size = 8))  # Tamaño del texto en el eje x
+
+
+datos_jc %>% 
+  ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
+  geom_boxplot(outlier.shape = NA) +  # Omitir valores extremos
+  scale_y_continuous(limits = c(0, 1000000)) +  # Ajusta los límites según tus datos
+  scale_fill_manual(values = c("red", "blue")) +
+  labs(title = "Distribución del ingreso total personal neto",
+       subtitle = "según dominio de un segundo idioma",
+       x = "Dominio de un segundo idioma",
+       y = "Ingreso total personal neto") +
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none")
+
+
