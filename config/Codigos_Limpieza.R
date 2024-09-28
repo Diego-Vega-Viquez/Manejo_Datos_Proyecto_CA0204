@@ -86,6 +86,24 @@ datos_con_tipo_de_varibles$A21 <- as_factor(datos_con_tipo_de_varibles$A21)
 datos_con_tipo_de_varibles$A22A <- as_factor(datos_con_tipo_de_varibles$A22A)
 datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
 
+#variables que creo que puedan ser utiles
+datos_con_tipo_de_varibles$REGION <- as_factor(datos_con_tipo_de_varibles$REGION)
+datos_con_tipo_de_varibles$ZONA <- as_factor(datos_con_tipo_de_varibles$ZONA)
+datos_con_tipo_de_varibles$EFI <- as_factor(datos_con_tipo_de_varibles$EFI)
+datos_con_tipo_de_varibles$CalViv <- as_factor(datos_con_tipo_de_varibles$CalViv)
+datos_con_tipo_de_varibles$ZONA <- as_factor(datos_con_tipo_de_varibles$ZONA)
+datos_con_tipo_de_varibles$V19 <- as_factor(datos_con_tipo_de_varibles$V19)
+datos_con_tipo_de_varibles$ZONA <- as_factor(datos_con_tipo_de_varibles$ZONA)
+datos_con_tipo_de_varibles$A3 <- as_factor(datos_con_tipo_de_varibles$A3)
+datos_con_tipo_de_varibles$A6 <- as_factor(datos_con_tipo_de_varibles$A6)
+datos_con_tipo_de_varibles$CondMig <- as_factor(datos_con_tipo_de_varibles$CondMig)
+datos_con_tipo_de_varibles$A3 <- as_factor(datos_con_tipo_de_varibles$A3)
+
+
+
+
+
+
 
 ####################################
 
@@ -148,3 +166,20 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           cba,
                                                           lp,
                                                           )
+
+#mi escogencia de datos
+datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
+                                                  EFI, CalViv,
+                                                  V19,TamViv,
+                                                  A3, A4,
+                                                  A5, A6,
+                                                  CondMig, A15A,
+                                                  A15B,NivInst,
+                                                  Escolari, ForReg,
+                                                  A16B, A17,
+                                                  A20A, ForNoReg,
+                                                  A22A,itpn,
+                                                  IPM_Pobreza, Q_IPCN,
+                                                  ipcn)
+
+datos_jc <- datos_jc %>% filter(A5 >= 18 & A5 <= 60)  
