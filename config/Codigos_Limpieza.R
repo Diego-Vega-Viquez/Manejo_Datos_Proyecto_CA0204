@@ -93,6 +93,7 @@ datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
 
 ####################################
 
+datos_con_tipo_de_varibles$A23 <- as_factor(datos_con_tipo_de_varibles$A23)
 datos_con_tipo_de_varibles$RamaEmpPri <- as_factor(datos_con_tipo_de_varibles$RamaEmpPri)
 datos_con_tipo_de_varibles$np <- as_factor(datos_con_tipo_de_varibles$np)
 datos_con_tipo_de_varibles$E1 <- as_factor(datos_con_tipo_de_varibles$E1)
@@ -119,6 +120,7 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           ForNoReg,  A21,
                                                           A22A,      A22B,
                                                           np, # Socioeconomicas
+                                                          A23,
                                                           E1,
                                                           IPM_Pobreza,
                                                           IPM_Intensidad,
@@ -129,12 +131,15 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           Q_ZON_IPCN,
                                                           Q_REG_IPCN,
                                                           Q_IPCN,
-                                                          ipbh, # Cuantitativas
+                                                          spmn, # Cuantitativas
+                                                          ipbh, 
                                                           ipnh,
                                                           ithb,
                                                           ithn,
                                                           ipcb,
                                                           ipcn,
+                                                          ipsnt,
+                                                          itpn,
                                                           isanh,
                                                           ts,
                                                           ot,
