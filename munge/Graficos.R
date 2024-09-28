@@ -25,7 +25,6 @@ library(haven) # Para cargar el .sav
 library(scales)
 library(ggridges) # Para usar geom_density_ridges
 
-
 datos_con_tipo_de_varibles %>%
   filter(!is.na(A16B)) %>%  # Excluye valores NA
   ggplot(aes(x = A16B)) +
@@ -102,5 +101,32 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)
   theme(legend.position = "none")
 
 #Grafico de pobreza segun nivel de instrucción
-datos_jc %>% ggplot(aes(x = ))
+datos_jc_filtrado <- datos_jc %>% filter(!is.na(np))
+datos_jc_filtrado %>% 
+  ggplot(aes(x = np, fill = NivInst)) +
+  geom_bar(position = "fill") +
+  labs(title = "Nivel de pobreza",
+       subtitle = "según nivel de instrucción",
+       x = "Nivel de pobreza",
+       y = NULL, # Eliminar el título del eje y
+       fill = "Nivel de instrucción") +  
+  cowplot::theme_cowplot() +
+  theme(legend.text = element_text(size = 8),
+        axis.text.x = element_text(size = 8))  # Cambiar el tamaño del texto del eje x
+
+#Grafico de pobreza multidimensional segun nivel de instruccion
+datos_jc_filtrado <- datos_jc %>% filter(!is.na(IPM_Pobreza))
+datos_jc_filtrado %>% 
+  ggplot(aes(x = IPM_Pobreza, fill = NivInst)) +
+  geom_bar(position = "fill") +
+  labs(title = "Nivel de pobreza",
+       subtitle = "según nivel de instrucción",
+       x = "Nivel de pobreza",
+       y = NULL, # Eliminar el título del eje y
+       fill = "Nivel de instrucción") +  
+  cowplot::theme_cowplot() +
+  theme(legend.text = element_text(size = 8),
+        axis.text.x = element_text(size = 8))  # Cambiar el tamaño del texto del eje x
+
+  
   
