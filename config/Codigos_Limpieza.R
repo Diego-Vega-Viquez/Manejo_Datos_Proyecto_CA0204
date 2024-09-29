@@ -2,14 +2,15 @@
 # Este documento corresponde al archivo .R que contiene los códigos para la 
 # limpieza de la base de datos
 
+# command + shift + C
 
 # Librerías:
 
-install.packages("ProjectTemplate")
-install.packages("devtools")
-install.packages("tidyverse")
-install.packages("cowplot")
-install.packages("openintro")
+# install.packages("ProjectTemplate")
+# install.packages("devtools")
+# install.packages("tidyverse")
+# install.packages("cowplot")
+# install.packages("openintro")
 
 library("digest")
 library("tibble")
