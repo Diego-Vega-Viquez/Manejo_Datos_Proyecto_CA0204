@@ -104,7 +104,8 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
   theme(legend.position = "none")
   
 #Grafico de ingreso total personal neto por años de escolaridad segun region de planificacion 
-## ME ESTA DANDO PROBLEMA (DIEGO)
+
+datos_jc$REGION <- as_factor(datos_jc$REGION) 
 
 datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)) +
   geom_point() + 
@@ -254,3 +255,5 @@ my_sf <- read_sf("UGER_MGN_2022.shp")
 ggplot(my_sf) +
   geom_sf(fill = "#69b3a2", color = "white") +
   theme_void()
+
+
