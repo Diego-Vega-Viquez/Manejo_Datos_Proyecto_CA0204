@@ -157,6 +157,19 @@ datos_jc %>%
   cowplot::theme_cowplot() +
   theme(legend.position = "none")
 
+datos_jc %>% 
+  ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
+  geom_violin(outlier.shape = NA) +  # Omitir valores extremos
+  scale_y_continuous(limits = c(0, 2000000)) +  # Ajusta los límites según tus datos
+  scale_fill_manual(values = c("red", "blue")) +
+  labs(title = "Distribución del ingreso total personal neto",
+       subtitle = "según dominio de un segundo idioma",
+       x = "Dominio de un segundo idioma",
+       y = "Ingreso total personal neto") +
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none")
+
+
 #Grafico de ingreso segun formacion educativa forma
 datos_jc %>% filter(!is.na(ForReg) & itpn < 2500000) %>%
   ggplot(aes(x = itpn, y = ForReg, fill = ForReg, color = ForReg)) +
@@ -180,6 +193,8 @@ datos_jc %>% filter(!is.na(np))%>%
   ggplot(aes(x = Tiene_sec_completa, fill = np)) +
   geom_bar(position = "fill") +
   cowplot::theme_cowplot()
+
+#
 
 
 
