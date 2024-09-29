@@ -65,8 +65,6 @@ variables_utiles %>% filter(spmn > 0) %>% ggplot(aes(x = spmn,
                         color = guide_legend(reverse = TRUE)) + 
                      theme(axis.text.y = element_blank())
 
-
-
 variables_utiles %>% filter(!is.na(Q_IPCN)) %>% 
                      ggplot(aes(x = Escolari, 
                                 y = ipsnt, 

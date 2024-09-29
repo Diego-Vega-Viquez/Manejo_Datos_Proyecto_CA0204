@@ -245,6 +245,9 @@ cuadro_estudios_postsecundarios <- datos_jc %>%
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b76ba15 (feat: agrega un nuevo gráfico y ordena una variable)
 
 prueba <- variables_utiles$Q_IPCN
 prueba <- as.character(prueba)
@@ -272,6 +275,9 @@ variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN,
                                              "Q4: Más de ₡321.523 a ₡574.085", 
                                              "Q5: Más de ₡574.085", 
                                              "NA"))
+<<<<<<< HEAD
 
 =======
 >>>>>>> c5c1ef4 (fix: arreglos varios de graficos y manipulacion de variables)
+=======
+>>>>>>> b76ba15 (feat: agrega un nuevo gráfico y ordena una variable)
