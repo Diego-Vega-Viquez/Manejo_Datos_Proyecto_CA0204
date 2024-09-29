@@ -95,13 +95,15 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
   geom_hex() + 
   geom_smooth(method = "lm", se = FALSE, colour = "red") +
   facet_wrap(~ZONA) +
-  labs(title = "Ingreso total personal neto\npor años de escolaridad",
+  labs(title = "Gráfico 1. Ingreso total personal neto\npor años de escolaridad",
        subtitle = "según zona",
        x = "Escolaridad",
-       y = "Ingreso") +
+       y = "Ingreso",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
   scale_y_log10(labels = label_number()) +
   cowplot::theme_cowplot() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.caption = element_text(size = 6, hjust = 0))
   
 #Grafico de ingreso total personal neto por años de escolaridad segun region de planificacion 
 ## ME ESTA DANDO PROBLEMA (DIEGO)
@@ -110,54 +112,62 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE, colour = "black") +
   facet_wrap(~REGION) +
-  labs(title = "Ingreso total personal neto\npor años de escolaridad",
+  labs(title = "Gráfico 2. Ingreso total personal neto\npor años de escolaridad",
        subtitle = "según región de planificación",
        x = "Escolaridad",
-       y = "Ingreso") +
+       y = "Ingreso",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
   scale_y_log10(labels = label_number()) +
   cowplot::theme_cowplot() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.caption = element_text(size = 6, hjust = 0))
 
 #Grafico de pobreza segun nivel de instrucción
 datos_jc %>% filter(!is.na(np)) %>% 
   ggplot(aes(x = np, fill = NivInst)) +
   geom_bar(position = "fill") +
-  labs(title = "Nivel de pobreza",
+  labs(title = "Grafico 3. Nivel de pobreza",
        subtitle = "según nivel de instrucción",
        x = "Nivel de pobreza",
        y = NULL, # Eliminar el título del eje y
-       fill = "Nivel de instrucción") +  
+       fill = "Nivel de instrucción",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +  
   cowplot::theme_cowplot() +
   theme(legend.text = element_text(size = 8),
-        axis.text.x = element_text(size = 8))  # Cambiar el tamaño del texto del eje x
+        axis.text.x = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0))  # Cambiar el tamaño del texto del eje x
 
 #Grafico de pobreza multidimensional segun nivel de instruccion
 datos_jc %>% filter(!is.na(IPM_Pobreza)) %>% 
   ggplot(aes(x = IPM_Pobreza, fill = NivInst)) +
   geom_bar(position = "fill") +
-  labs(title = "Nivel de pobreza",
+  labs(title = "Gráfico 4. Nivel de pobreza multidimensional",
        subtitle = "según nivel de instrucción",
        x = "Nivel de pobreza",
        y = NULL, # Eliminar el título del eje y
-       fill = "Nivel de instrucción") +  
+       fill = "Nivel de instrucción",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +  
   cowplot::theme_cowplot() +
   theme(legend.text = element_text(size = 8),
-        axis.text.x = element_text(size = 8))  # Cambiar el tamaño del texto del eje x
+        axis.text.x = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0))  # Cambiar el tamaño del texto del eje x
 
 #Numero de titulos obtenidos segun quintil de ingreso per capita
 datos_jc %>% filter(!is.na(A16B)) %>%
   ggplot(aes(x = Q_IPCN, fill = A16B)) +
   geom_bar(position = "dodge") +  # Colocar barras separadas dentro de cada cuartil
-  labs(title = "Número de títulos obtenidos",
+  labs(title = "Gráfico 5. Títulos obtenidos",
        subtitle = "Según quintil de ingreso per cápita",
        x = NULL,  # Eliminar el título del eje x
        y = NULL,  # Eliminar el título del eje y
-       fill = "Título obtenido") +  # Título de la leyenda
+       fill = "Título obtenido",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +  # Título de la leyenda
   coord_polar() +  # Gráfico circular
   scale_y_log10() +  # Aplicar la transformación de raíz cuadrada a la escala de y
   cowplot::theme_cowplot() +
   theme(legend.text = element_text(size = 8),  # Tamaño de texto de la leyenda
-        axis.text.x = element_text(size = 8))  # Tamaño del texto en el eje x
+        axis.text.x = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0))  # Tamaño del texto en el eje x
 
 
 #Grafico de distribucion del ingreso segun dominio de un segundo idioma
@@ -167,12 +177,14 @@ datos_jc %>%
   geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
   annotate("text", x = 0.5, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
   scale_y_log10(labels = scales::comma) +  scale_fill_manual(values = c("red", "blue")) +
-  labs(title = "Distribución del ingreso total personal neto",
+  labs(title = "Gráfico 6.1. Distribución del ingreso total\npersonal neto",
        subtitle = "según dominio de un segundo idioma",
        x = "Dominio de un segundo idioma",
-       y = "Ingreso total personal neto") +
+       y = "Ingreso total personal neto",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
   cowplot::theme_cowplot() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.caption = element_text(size = 6, hjust = 0))
 
 datos_jc %>% 
   ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
@@ -181,12 +193,14 @@ datos_jc %>%
   annotate("text", x = 0.5, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
   scale_y_log10(labels = scales::comma) +
   scale_fill_manual(values = c("pink", "blue")) +
-  labs(title = "Distribución del ingreso total personal neto",
+  labs(title = "Gráfico 6.2. Distribución del ingreso total\npersonal neto",
        subtitle = "según dominio de un segundo idioma",
        x = "Dominio de un segundo idioma",
-       y = "Ingreso total personal neto") +
+       y = "Ingreso total personal neto",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
   cowplot::theme_cowplot() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.caption = element_text(size = 6, hjust = 0))
 
 
 #Grafico de ingreso segun formacion educativa forma
@@ -197,26 +211,57 @@ datos_jc %>%
   geom_density_ridges(alpha = 0.5) +
   geom_vline(xintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
   annotate("text", y = 0.7, x = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
-  labs(title = "Ingreso total personal neto",
+  labs(title = "Gráfico 7. Ingreso total personal neto",
        subtitle = "según formación educativa formal",
-       x = "Ingreso en millones de colones",
-       y = "Formación educativa") +
+       x = "Ingreso",
+       y = "Formación educativa",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
   scale_x_log10(labels = scales::comma) +  # Mostrar en millones
   cowplot::theme_cowplot() +
   theme(legend.position = "none",
-        axis.text.y = element_text(size = 8, angle = 25, hjust = 1))
+        axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
 
   
 #Graficos de porcentaje de pobreza segun si se tiene secundaria o primaria completa
 datos_jc %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_prim_completa, fill = np)) +
   geom_bar(position = "fill") +
-  cowplot::theme_cowplot()
+  labs(title = "Gráfico 8. Porcentaje población pobre",
+       subtitle = "según tenencia de primaria completa",
+       x = NULL,
+       y = "Porcentaje",
+       fill = "Nivel de pobreza",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
+  cowplot::theme_cowplot() +
+  theme(plot.caption = element_text(size = 6, hjust = 0))
 
 datos_jc %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_sec_completa, fill = np)) +
   geom_bar(position = "fill") +
-  cowplot::theme_cowplot()
+  labs(title = "Gráfico 9. Porcentaje población pobre",
+       subtitle = "según tenencia de secundaria completa",
+       x = NULL,
+       y = "Porcentaje",
+       fill = "Nivel de pobreza",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
+  cowplot::theme_cowplot() +
+  theme(axis.text.x = element_text(size = 10),
+        plot.caption = element_text(size = 6, hjust = 0))
+
+datos_jc %>% filter(!is.na(np))%>% 
+  ggplot(aes(x = Tiene_est_postsec, fill = np)) +
+  geom_bar(position = "fill") +
+  labs(title = "Gráfico 10. Porcentaje población pobre",
+       subtitle = "según tenencia de estudios post-secundarios",
+       x = NULL,
+       y = "Porcentaje",
+       fill = "Nivel de pobreza",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
+  cowplot::theme_cowplot() +
+  theme(axis.text.x = element_text(size = 9),
+        plot.caption = element_text(size = 6, hjust = 0))
+
 
 #Grafico de distribucion de ingreso por universidad publica
 
@@ -225,15 +270,16 @@ datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado")%>%
   geom_violin() +
   geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
   annotate("text", x = 1.15, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
-  labs(title = "Ingreso total por persona neto",
+  labs(title = "Gráfico 11. Ingreso total por persona neto",
        subtitle = "según universidad pública a la que se asistió",
        x = "Universidad",
-       y = "Ingreso total por persona neto") +
+       y = "Ingreso total por persona neto",
+       caption = "Fuente: Elaboración propia a partir de datos de ENAHO, 2023") +
   scale_y_log10(labels = scales::comma) +
   cowplot::theme_cowplot() +
   theme(legend.position = "none",
-        axis.text.y = element_text(size = 8, angle = 25, hjust = 1))
-
+        axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
 
 
 
