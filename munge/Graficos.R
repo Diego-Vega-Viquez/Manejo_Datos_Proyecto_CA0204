@@ -64,13 +64,24 @@ variables_utiles %>% filter(spmn > 0) %>% ggplot(aes(x = spmn,
                         color = guide_legend(reverse = TRUE)) + 
                      theme(axis.text.y = element_blank())
 
-variables_utiles %>% ggplot(aes(x = Escolari, 
+variables_utiles %>% filter(!is.na(Q_IPCN)) %>% 
+                     ggplot(aes(x = Escolari, 
                                 y = ipsnt, 
                                 colour = Q_IPCN)) +
-                      geom_point() +
+                      geom_jitter() +
                       geom_smooth(method = "lm", se = FALSE, colour = "black") +
                       facet_wrap(~Q_IPCN) +
-                      labs(title = "Título",
-                           x = "PIB per cápita",
-                           y = "Esperanza de vida") +
-                     scale_y_log10(labels = label_number()) 
+                      labs(title = "Relación entre los años de escolaridad e ingreso salario neto",
+                           x = "Años de escolaridad",
+                           y = "Ingreso principal salario neto total",
+                           colour = "Quintiles de ingreso per cápita \ndel hogar neto \npor región de planificación",
+                           caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+                     scale_y_log10(labels = label_number()) +
+                     theme_cowplot() 
+variables_utiles %>% filter(!is.na(A22A)) %>%
+                     ggplot(aes(x = A22A, 
+                                y = ipcn)) + 
+                     geom_boxplot() +
+                     scale_y_log10(labels = label_number())
+
+## USAR ForReg que es el rezago
