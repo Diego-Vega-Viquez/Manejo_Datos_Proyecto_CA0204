@@ -82,10 +82,14 @@ variables_utiles %>% filter(!is.na(Q_IPCN)) %>%
   scale_y_log10(labels = label_number()) +
   theme_cowplot() 
 variables_utiles %>% filter(!is.na(A22A)) %>%
-  ggplot(aes(x = A22A, 
-             y = ipcn)) + 
-  geom_boxplot() +
-  scale_y_log10(labels = label_number())
+                     ggplot(aes(x = A22A, 
+                                y = ipcn)) + 
+                     geom_violin() +
+                     scale_y_log10(labels = label_number())
+
+## USAR ForReg que es el rezago
+
+###########################################################
 
 #Grafico de ingreso total personal neto por años de escolaridad segun zona
 datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +

@@ -271,3 +271,4 @@ variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN,
                                              "Q4: Más de ₡321.523 a ₡574.085", 
                                              "Q5: Más de ₡574.085", 
                                              "NA"))
+
