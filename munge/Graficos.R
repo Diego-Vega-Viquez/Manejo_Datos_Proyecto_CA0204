@@ -39,7 +39,7 @@ variables_utiles %>% ggplot(aes(x = NivInst,
                                 fill = NivInst)) +
                      geom_boxplot() +
                      scale_y_log10(labels = label_number()) +
-                     labs( title = "Figura 1. Comparación del Ingreso Principal Neto del Hogar según Nivel de Instrucción, 2023",
+                     labs( title = "Gráfico 12. Comparación del Ingreso Principal Neto del Hogar según Nivel de Instrucción, 2023",
                            subtitle = "Expresado en colones costarricenses",
                            x = "Nivel de Instrucción",
                            y = "Ingreso Principal Neto del Hogar",
@@ -47,13 +47,13 @@ variables_utiles %>% ggplot(aes(x = NivInst,
                            caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.")+
                      theme(axis.text.x = element_blank())
 
-variables_utiles %>% filter(spmn > 0) %>% ggplot(aes(x = spmn, 
+variables_utiles %>% filter(spmn > 0 &!is.na(A16B)) %>% ggplot(aes(x = spmn, 
                                                      y = A16B, 
                                                      fill = A16B, 
                                                      color = A16B)) + 
                      geom_density_ridges(alpha = 0.5) + 
                      scale_x_log10(labels = label_number()) +
-                      labs( title = "Figura 2. Distribución del Ingreso Total por persona del Hogar según Grado Académico en Costa Rica, 2023",
+                      labs( title = "Figura 13. Distribución del Ingreso Total por persona del Hogar según Grado Académico en Costa Rica, 2023",
                             subtitle = "Expresado en colones costarricenses",
                             x = "Ingreso total del hogar neto",
                             y = "Título",
@@ -72,7 +72,7 @@ variables_utiles %>% filter(!is.na(Q_IPCN)) %>%
                       geom_jitter() +
                       geom_smooth(method = "lm", se = FALSE, colour = "black") +
                       facet_wrap(~Q_IPCN) +
-  labs(title = "Relación entre los años de escolaridad e ingreso salario neto",
+  labs(title = "Figura 14. Relación entre los años de escolaridad e ingreso salario neto",
        x = "Años de escolaridad",
        y = "Ingreso principal salario neto total",
        colour = "Quintiles de ingreso per cápita \ndel hogar neto \npor región de planificación",
@@ -89,6 +89,10 @@ variables_utiles %>% filter(!is.na(A22A)) %>%
 
 ###########################################################
 
+#############
+# GRAFICO 1 #
+#############
+
 #Grafico de ingreso total personal neto por años de escolaridad segun zona
 datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
   geom_hex() + 
@@ -104,6 +108,10 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
   theme(legend.position = "none",
         plot.caption = element_text(size = 6, hjust = 0))
   
+#############
+# GRAFICO 2 #
+#############
+
 #Grafico de ingreso total personal neto por años de escolaridad segun region de planificacion 
 
 datos_jc$REGION <- as_factor(datos_jc$REGION) 
@@ -122,6 +130,10 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)
   theme(legend.position = "none",
         plot.caption = element_text(size = 6, hjust = 0))
 
+#############
+# GRAFICO 3 #
+#############
+
 #Grafico de pobreza segun nivel de instrucción
 datos_jc %>% filter(!is.na(np)) %>% 
   ggplot(aes(x = np, fill = NivInst)) +
@@ -137,6 +149,10 @@ datos_jc %>% filter(!is.na(np)) %>%
         axis.text.x = element_text(size = 8),
         plot.caption = element_text(size = 6, hjust = 0))  # Cambiar el tamaño del texto del eje x
 
+#############
+# GRAFICO 4 #
+#############
+
 #Grafico de pobreza multidimensional segun nivel de instruccion
 datos_jc %>% filter(!is.na(IPM_Pobreza)) %>% 
   ggplot(aes(x = IPM_Pobreza, fill = NivInst)) +
@@ -151,6 +167,10 @@ datos_jc %>% filter(!is.na(IPM_Pobreza)) %>%
   theme(legend.text = element_text(size = 8),
         axis.text.x = element_text(size = 8),
         plot.caption = element_text(size = 6, hjust = 0))  # Cambiar el tamaño del texto del eje x
+
+#############
+# GRAFICO 5 #
+#############
 
 #Numero de titulos obtenidos segun quintil de ingreso per capita
 datos_jc %>% filter(!is.na(A16B)) %>%
@@ -169,6 +189,9 @@ datos_jc %>% filter(!is.na(A16B)) %>%
         axis.text.x = element_text(size = 8),
         plot.caption = element_text(size = 6, hjust = 0))  # Tamaño del texto en el eje x
 
+#############
+# GRAFICO 6.1 #
+#############
 
 #Grafico de distribucion del ingreso segun dominio de un segundo idioma
 datos_jc %>% 
@@ -186,6 +209,10 @@ datos_jc %>%
   theme(legend.position = "none",
         plot.caption = element_text(size = 6, hjust = 0))
 
+#############
+# GRAFICO 6.2 #
+#############
+
 datos_jc %>% 
   ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
   geom_violin(outlier.shape = NA) +  # Omitir valores extremos
@@ -202,6 +229,9 @@ datos_jc %>%
   theme(legend.position = "none",
         plot.caption = element_text(size = 6, hjust = 0))
 
+#############
+# GRAFICO 7 #
+#############
 
 #Grafico de ingreso segun formacion educativa forma
 
@@ -222,6 +252,9 @@ datos_jc %>%
         axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
         plot.caption = element_text(size = 6, hjust = 0))
 
+#############
+# GRAFICO 8 #
+#############
   
 #Graficos de porcentaje de pobreza segun si se tiene secundaria o primaria completa
 datos_jc %>% filter(!is.na(np))%>% 
@@ -236,6 +269,10 @@ datos_jc %>% filter(!is.na(np))%>%
   cowplot::theme_cowplot() +
   theme(plot.caption = element_text(size = 6, hjust = 0))
 
+#############
+# GRAFICO 9 #
+#############
+
 datos_jc %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_sec_completa, fill = np)) +
   geom_bar(position = "fill") +
@@ -248,6 +285,10 @@ datos_jc %>% filter(!is.na(np))%>%
   cowplot::theme_cowplot() +
   theme(axis.text.x = element_text(size = 10),
         plot.caption = element_text(size = 6, hjust = 0))
+
+##############
+# GRAFICO 10 #
+##############
 
 datos_jc %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_est_postsec, fill = np)) +
@@ -262,6 +303,9 @@ datos_jc %>% filter(!is.na(np))%>%
   theme(axis.text.x = element_text(size = 9),
         plot.caption = element_text(size = 6, hjust = 0))
 
+##############
+# GRAFICO 11 #
+##############
 
 #Grafico de distribucion de ingreso por universidad publica
 
