@@ -167,19 +167,6 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           lp,
                                                           )
 
-<<<<<<< HEAD
-
-prueba <- variables_utiles$Q_IPCN
-prueba <- as.character(prueba)
-
-# Formatear los valores en la columna Q_IPCN
-prueba <- prueba %>% str_replace_all("\\d+", function(x) {
-  formatC(as.numeric(x), format = "f", big.mark = ".", digits = 0)
-})
-prueba <- gsub("\\s([0-9]{3}\\.+)", " ₡\\1", prueba)
-
-
-
 # Formatear los valores en la columna Q_IPCN
 variables_utiles$Q_IPCN <- as.character(variables_utiles$Q_IPCN)
 variables_utiles$Q_IPCN <- variables_utiles$Q_IPCN %>% str_replace_all("\\d+", function(x) {
@@ -195,8 +182,9 @@ variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN,
                                              "Q4: Más de ₡321.523 a ₡574.085", 
                                              "Q5: Más de ₡574.085", 
                                              "NA"))
-=======
-#mi escogencia de datos
+
+
+# escogencia de datos JOSE
 datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
                                                   EFI, CalViv,
                                                   V19,TamViv,
@@ -241,4 +229,3 @@ cuadro_secundaria_completa <- datos_jc %>%
   group_by(Tiene_sec_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
   mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
->>>>>>> 85fbc64b85c78eecfa16724cfb34de9d3c2e8476

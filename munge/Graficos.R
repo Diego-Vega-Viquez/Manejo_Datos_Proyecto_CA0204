@@ -83,7 +83,7 @@ variables_utiles %>% filter(!is.na(Q_IPCN)) %>%
 variables_utiles %>% filter(!is.na(A22A)) %>%
                      ggplot(aes(x = A22A, 
                                 y = ipcn)) + 
-                     geom_boxplot() +
+                     geom_violin() +
                      scale_y_log10(labels = label_number())
 
 ## USAR ForReg que es el rezago
@@ -103,7 +103,9 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
   cowplot::theme_cowplot() +
   theme(legend.position = "none")
   
-#Grafico de ingreso total personal neto por años de escolaridad segun region de planificacion
+#Grafico de ingreso total personal neto por años de escolaridad segun region de planificacion 
+## ME ESTA DANDO PROBLEMA (DIEGO)
+
 datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE, colour = "black") +
