@@ -244,6 +244,7 @@ cuadro_estudios_postsecundarios <- datos_jc %>%
   mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
 
+<<<<<<< HEAD
 
 prueba <- variables_utiles$Q_IPCN
 prueba <- as.character(prueba)
@@ -272,3 +273,5 @@ variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN,
                                              "Q5: Más de ₡574.085", 
                                              "NA"))
 
+=======
+>>>>>>> c5c1ef4 (fix: arreglos varios de graficos y manipulacion de variables)
