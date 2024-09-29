@@ -10,7 +10,7 @@ install.packages("cowplot")
 install.packages("openintro")
 install.packages("cowplot")
 install.packages("ggridges")
-install.packages("treemap")
+install.packages("sf")
 
 library("digest")
 library("tibble")
@@ -25,7 +25,7 @@ library(openintro)
 library(haven) # Para cargar el .sav
 library(scales)
 library(ggridges) # Para usar geom_density_ridges
-library(treemap)
+library(sf)
 
 datos_con_tipo_de_varibles %>%
   filter(!is.na(A16B)) %>%  # Excluye valores NA
@@ -194,7 +194,42 @@ datos_jc %>% filter(!is.na(np))%>%
   geom_bar(position = "fill") +
   cowplot::theme_cowplot()
 
-#
+#Grafico de distribucion de ingreso por universidad publica
+
+datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado")%>% 
+  ggplot(aes(x = A15B, y = itpn, fill = A15B)) +
+  geom_violin() +
+  geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
+  annotate("text", x = 1.15, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
+  labs(title = "Ingreso total por persona neto",
+       subtitle = "según universidad pública a la que se asistió",
+       x = "Universidad",
+       y = "Ingreso total por persona neto") +
+  scale_y_log10(labels = scales::comma) +
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 8, angle = 25, hjust = 1))
+
+
+
+
+
+
+#Grafico mapa de regiones de planificacion
+
+# Download the shapefile. (note that I store it in a folder called DATA. You have to change that if needed.)
+download.file("https://admin.inec.cr/sites/default/files/2023-07/UGER_MGN_2022.zip", destfile = "data/world_shape_file.zip")
+# You now have it in your current working directory, have a look!
+
+# Unzip this file. You can do it with R (as below), or clicking on the object you downloaded.
+unzip("data/world_shape_file.zip", junkpaths = FALSE)
+#  -- > You now have 4 files. One of these files is a .shp file! (TM_WORLD_BORDERS_SIMPL-0.3.shp)
+
+my_sf <- read_sf("UGER_MGN_2022.shp")
+
+ggplot(my_sf) +
+  geom_sf(fill = "#69b3a2", color = "white") +
+  theme_void()
 
 
 
