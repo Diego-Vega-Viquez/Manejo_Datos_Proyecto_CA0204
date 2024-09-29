@@ -244,3 +244,30 @@ cuadro_estudios_postsecundarios <- datos_jc %>%
   mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
 
+
+prueba <- variables_utiles$Q_IPCN
+prueba <- as.character(prueba)
+
+# Formatear los valores en la columna Q_IPCN
+prueba <- prueba %>% str_replace_all("\\d+", function(x) {
+  formatC(as.numeric(x), format = "f", big.mark = ".", digits = 0)
+})
+prueba <- gsub("\\s([0-9]{3}\\.+)", " ₡\\1", prueba)
+
+
+
+# Formatear los valores en la columna Q_IPCN
+variables_utiles$Q_IPCN <- as.character(variables_utiles$Q_IPCN)
+variables_utiles$Q_IPCN <- variables_utiles$Q_IPCN %>% str_replace_all("\\d+", function(x) {
+  formatC(as.numeric(x), format = "f", big.mark = ".", digits = 0)
+})
+variables_utiles$Q_IPCN <- gsub("\\s([0-9]{3}\\.+)", " ₡\\1", variables_utiles$Q_IPCN)
+variables_utiles$Q_IPCN <- as_factor(variables_utiles$Q_IPCN)
+# Reordenar los niveles de Q_IPCN
+variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN, 
+                                  levels = c("Q1: ₡110.683 ó menos", 
+                                             "Q2: Más de ₡110.683 a ₡195.000", 
+                                             "Q3: Más de ₡195.000 a ₡321.523", 
+                                             "Q4: Más de ₡321.523 a ₡574.085", 
+                                             "Q5: Más de ₡574.085", 
+                                             "NA"))

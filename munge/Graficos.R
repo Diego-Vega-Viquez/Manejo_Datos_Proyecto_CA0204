@@ -65,30 +65,27 @@ variables_utiles %>% filter(spmn > 0) %>% ggplot(aes(x = spmn,
                         color = guide_legend(reverse = TRUE)) + 
                      theme(axis.text.y = element_blank())
 
+
+
 variables_utiles %>% filter(!is.na(Q_IPCN)) %>% 
                      ggplot(aes(x = Escolari, 
-                                y = ipsnt,
+                                y = ipsnt, 
                                 colour = Q_IPCN)) +
                       geom_jitter() +
                       geom_smooth(method = "lm", se = FALSE, colour = "black") +
                       facet_wrap(~Q_IPCN) +
-                      labs(title = "Relación entre los años de escolaridad e ingreso salario neto",
-                           x = "Años de escolaridad",
-                           y = "Ingreso principal salario neto total",
-                           colour = "Quintiles de ingreso per cápita \ndel hogar neto \npor región de planificación",
-                           caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
-                     scale_y_log10(labels = label_number()) +
-                     theme_cowplot() 
-
+  labs(title = "Relación entre los años de escolaridad e ingreso salario neto",
+       x = "Años de escolaridad",
+       y = "Ingreso principal salario neto total",
+       colour = "Quintiles de ingreso per cápita \ndel hogar neto \npor región de planificación",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_y_log10(labels = label_number()) +
+  theme_cowplot() 
 variables_utiles %>% filter(!is.na(A22A)) %>%
-                     ggplot(aes(x = A22A, 
-                                y = ipcn)) + 
-                     geom_violin() +
-                     scale_y_log10(labels = label_number())
-
-## USAR ForReg que es el rezago
-
-###########################################################
+  ggplot(aes(x = A22A, 
+             y = ipcn)) + 
+  geom_boxplot() +
+  scale_y_log10(labels = label_number())
 
 #Grafico de ingreso total personal neto por años de escolaridad segun zona
 datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
@@ -300,3 +297,4 @@ my_sf <- read_sf("UGER_MGN_2022.shp")
 ggplot(my_sf) +
   geom_sf(fill = "#69b3a2", color = "white") +
   theme_void()
+
