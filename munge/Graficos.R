@@ -95,7 +95,7 @@ datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)
   geom_smooth(method = "lm", se = FALSE, colour = "black") +
   facet_wrap(~REGION) +
   labs(title = "Ingreso total personal neto\npor años de escolaridad",
-       subtitle = "según zona",
+       subtitle = "según región de planificación",
        x = "Escolaridad",
        y = "Ingreso") +
   scale_y_log10(labels = label_number()) +
@@ -147,9 +147,10 @@ datos_jc %>% filter(!is.na(A16B)) %>%
 #Grafico de distribucion del ingreso segun dominio de un segundo idioma
 datos_jc %>% 
   ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
-  geom_boxplot(outlier.shape = NA) +  # Omitir valores extremos
-  scale_y_continuous(limits = c(0, 1000000)) +  # Ajusta los límites según tus datos
-  scale_fill_manual(values = c("red", "blue")) +
+  geom_boxplot() +  # Omitir valores extremos
+  geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
+  annotate("text", x = 0.5, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
+  scale_y_log10(labels = scales::comma) +  scale_fill_manual(values = c("red", "blue")) +
   labs(title = "Distribución del ingreso total personal neto",
        subtitle = "según dominio de un segundo idioma",
        x = "Dominio de un segundo idioma",
@@ -160,8 +161,10 @@ datos_jc %>%
 datos_jc %>% 
   ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
   geom_violin(outlier.shape = NA) +  # Omitir valores extremos
-  scale_y_continuous(limits = c(0, 2000000)) +  # Ajusta los límites según tus datos
-  scale_fill_manual(values = c("red", "blue")) +
+  geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
+  annotate("text", x = 0.5, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
+  scale_y_log10(labels = scales::comma) +
+  scale_fill_manual(values = c("pink", "blue")) +
   labs(title = "Distribución del ingreso total personal neto",
        subtitle = "según dominio de un segundo idioma",
        x = "Dominio de un segundo idioma",
