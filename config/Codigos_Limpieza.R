@@ -86,6 +86,24 @@ datos_con_tipo_de_varibles$A21 <- as_factor(datos_con_tipo_de_varibles$A21)
 datos_con_tipo_de_varibles$A22A <- as_factor(datos_con_tipo_de_varibles$A22A)
 datos_con_tipo_de_varibles$A22B <- as_factor(datos_con_tipo_de_varibles$A22B)
 
+#variables que creo que puedan ser utiles
+datos_con_tipo_de_varibles$REGION <- as_factor(datos_con_tipo_de_varibles$REGION)
+datos_con_tipo_de_varibles$ZONA <- as_factor(datos_con_tipo_de_varibles$ZONA)
+datos_con_tipo_de_varibles$EFI <- as_factor(datos_con_tipo_de_varibles$EFI)
+datos_con_tipo_de_varibles$CalViv <- as_factor(datos_con_tipo_de_varibles$CalViv)
+datos_con_tipo_de_varibles$ZONA <- as_factor(datos_con_tipo_de_varibles$ZONA)
+datos_con_tipo_de_varibles$V19 <- as_factor(datos_con_tipo_de_varibles$V19)
+datos_con_tipo_de_varibles$ZONA <- as_factor(datos_con_tipo_de_varibles$ZONA)
+datos_con_tipo_de_varibles$A3 <- as_factor(datos_con_tipo_de_varibles$A3)
+datos_con_tipo_de_varibles$A6 <- as_factor(datos_con_tipo_de_varibles$A6)
+datos_con_tipo_de_varibles$CondMig <- as_factor(datos_con_tipo_de_varibles$CondMig)
+datos_con_tipo_de_varibles$A3 <- as_factor(datos_con_tipo_de_varibles$A3)
+
+
+
+
+
+
 
 ####################################
 
@@ -149,6 +167,7 @@ variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           lp,
                                                           )
 
+<<<<<<< HEAD
 
 prueba <- variables_utiles$Q_IPCN
 prueba <- as.character(prueba)
@@ -176,3 +195,50 @@ variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN,
                                              "Q4: Más de ₡321.523 a ₡574.085", 
                                              "Q5: Más de ₡574.085", 
                                              "NA"))
+=======
+#mi escogencia de datos
+datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
+                                                  EFI, CalViv,
+                                                  V19,TamViv,
+                                                  A3, A4,
+                                                  A5, A6,
+                                                  CondMig, A15A,
+                                                  A15B,NivInst,
+                                                  Escolari, ForReg,
+                                                  A16B, A17,
+                                                  A20A, ForNoReg,
+                                                  A22A,itpn,
+                                                  np, IPM_Pobreza, 
+                                                  Q_IPCN, ipcn)
+
+datos_jc <- datos_jc %>% filter(A5 >= 18 & A5 <= 60)  
+
+datos_jc <- datos_jc %>% 
+  mutate(Tiene_prim_completa = case_when(NivInst == "Sin nivel de instrucción" | 
+                                        NivInst == "Primaria incompleta" ~ "Sin primaria completa",
+                                        TRUE ~ "Con primaria completa"))
+datos_jc <- datos_jc %>% 
+  mutate(Tiene_sec_completa = case_when(NivInst == "Secundaria técnica completa" |
+                                           NivInst == "Secundaria académica completa" |
+                                           NivInst == "Educación superior de pregrado y grado" |
+                                           NivInst == "Educación superior de posgrado" ~ "Con secundaria completa",
+                                          TRUE ~ "Sin secundaria completa"))
+
+
+cuadro_primaria_completa <- datos_jc %>% 
+  filter(!is.na(np)) %>%
+  group_by(Tiene_prim_completa, np) %>% 
+  summarise(conteo = n(), 
+            .groups = 'drop') %>%
+  group_by(Tiene_prim_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
+  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
+
+cuadro_secundaria_completa <- datos_jc %>% 
+  filter(!is.na(np)) %>%
+  group_by(Tiene_sec_completa, np) %>% 
+  summarise(conteo = n(), 
+            .groups = 'drop') %>%
+  group_by(Tiene_sec_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
+  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
+
+>>>>>>> 85fbc64b85c78eecfa16724cfb34de9d3c2e8476
