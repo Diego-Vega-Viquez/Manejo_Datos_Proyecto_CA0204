@@ -174,17 +174,22 @@ datos_jc %>%
 
 
 #Grafico de ingreso segun formacion educativa forma
-datos_jc %>% filter(!is.na(ForReg) & itpn < 2500000) %>%
+
+datos_jc %>% 
+  filter(!is.na(ForReg) & itpn > 0 & ForReg != "Ignorada" & ForReg != "No definida") %>%  # Filtrar valores NA y menores o iguales a 0
   ggplot(aes(x = itpn, y = ForReg, fill = ForReg, color = ForReg)) +
   geom_density_ridges(alpha = 0.5) +
+  geom_vline(xintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
+  annotate("text", y = 0.7, x = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
   labs(title = "Ingreso total personal neto",
        subtitle = "según formación educativa formal",
        x = "Ingreso en millones de colones",
        y = "Formación educativa") +
-  scale_x_continuous(labels = scales::label_number(scale = 1e-6)) +  # Mostrar en miles
+  scale_x_log10(labels = scales::comma) +  # Mostrar en millones
   cowplot::theme_cowplot() +
   theme(legend.position = "none",
         axis.text.y = element_text(size = 8, angle = 25, hjust = 1))
+
   
 #Graficos de porcentaje de pobreza segun si se tiene secundaria o primaria completa
 datos_jc %>% filter(!is.na(np))%>% 
