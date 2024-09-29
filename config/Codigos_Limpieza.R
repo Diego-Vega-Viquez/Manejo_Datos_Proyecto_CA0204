@@ -183,3 +183,32 @@ datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
                                                   Q_IPCN, ipcn)
 
 datos_jc <- datos_jc %>% filter(A5 >= 18 & A5 <= 60)  
+
+datos_jc <- datos_jc %>% 
+  mutate(Tiene_prim_completa = case_when(NivInst == "Sin nivel de instrucción" | 
+                                        NivInst == "Primaria incompleta" ~ "Sin primaria completa",
+                                        TRUE ~ "Con primaria completa"))
+datos_jc <- datos_jc %>% 
+  mutate(Tiene_sec_completa = case_when(NivInst == "Secundaria técnica completa" |
+                                           NivInst == "Secundaria académica completa" |
+                                           NivInst == "Educación superior de pregrado y grado" |
+                                           NivInst == "Educación superior de posgrado" ~ "Con secundaria completa",
+                                          TRUE ~ "Sin secundaria completa"))
+
+
+cuadro_primaria_completa <- datos_jc %>% 
+  filter(!is.na(np)) %>%
+  group_by(Tiene_prim_completa, np) %>% 
+  summarise(conteo = n(), 
+            .groups = 'drop') %>%
+  group_by(Tiene_prim_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
+  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
+
+cuadro_secundaria_completa <- datos_jc %>% 
+  filter(!is.na(np)) %>%
+  group_by(Tiene_sec_completa, np) %>% 
+  summarise(conteo = n(), 
+            .groups = 'drop') %>%
+  group_by(Tiene_sec_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
+  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
+
