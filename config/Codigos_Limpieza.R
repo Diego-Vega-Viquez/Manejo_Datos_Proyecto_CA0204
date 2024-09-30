@@ -244,3 +244,23 @@ cuadro_estudios_postsecundarios <- datos_jc %>%
   group_by(Tiene_est_postsec) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
   mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
+# Formatear los valores en la columna Q_IPCN
+datos_jc$Q_IPCN <- as.character(datos_jc$Q_IPCN)
+datos_jc$Q_IPCN <- datos_jc$Q_IPCN %>% str_replace_all("\\d+", function(x) {
+  formatC(as.numeric(x), format = "f", big.mark = ".", digits = 0)
+})
+datos_jc$Q_IPCN <- gsub("\\s([0-9]{3}\\.+)", " ₡\\1", datos_jc$Q_IPCN)
+datos_jc$Q_IPCN <- as_factor(datos_jc$Q_IPCN)
+# Reordenar los niveles de Q_IPCN
+datos_jc$Q_IPCN <- factor(datos_jc$Q_IPCN, 
+                                  levels = c("Q1: ₡110.683 ó menos", 
+                                             "Q2: Más de ₡110.683 a ₡195.000", 
+                                             "Q3: Más de ₡195.000 a ₡321.523", 
+                                             "Q4: Más de ₡321.523 a ₡574.085", 
+                                             "Q5: Más de ₡574.085", 
+                                             "NA"))
+
+datos_jc$np <- factor(datos_jc$np, 
+                          levels = c("No pobre",
+                                     "Pobreza no extrema",
+                                     "Pobreza extrema"))
