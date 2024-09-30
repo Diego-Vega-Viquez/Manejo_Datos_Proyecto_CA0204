@@ -212,14 +212,14 @@ ggsave("../Manejo_de_Datos/graphs/Grafico4.png",
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 #############
-# GRAFICO 5 #
+# GRAFICO 5.1 #
 #############
 
 #Numero de titulos obtenidos segun quintil de ingreso per capita
 datos_jc %>% filter(!is.na(A16B)) %>%
   ggplot(aes(x = Q_IPCN, fill = A16B)) +
   geom_bar(position = "dodge") +  # Colocar barras separadas dentro de cada cuartil
-  labs(title = "Gráfico 5. \nDistribución de Títulos Obtenidos según Quintil de Ingreso Per Cápita en Costa Rica",
+  labs(title = "Gráfico 5.1. \nDistribución de Títulos Obtenidos según Quintil de Ingreso Per Cápita en Costa Rica",
        subtitle = "Cantidad de títulos obtenidos en cada nivel educativo, clasificados por quintiles de ingreso per cápita al 2023",
        x = NULL,  # Eliminar el título del eje x
        y = NULL,  # Eliminar el título del eje y
@@ -240,6 +240,9 @@ ggsave("../Manejo_de_Datos/graphs/Grafico5.png",
        height = 6, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
+#############
+# GRAFICO 5.2 #
+#############
 
 datos_jc %>% 
   filter(!is.na(A16B) & !is.na(Q_IPCN) & A16B != "Ignorado") %>%  # Filtrar valores NA
@@ -247,17 +250,45 @@ datos_jc %>%
   summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
   pivot_wider(names_from = Q_IPCN, values_from = conteo, values_fill = 0) %>% #view() # Convertir a formato ancho
   ggparcoord(columns = 2:6, groupColumn = 1, scale = "uniminmax") +
-    labs(title = "Proporción de títulos obtenidos",
+    labs(title = "Gráfico 5.2. \nProporción de títulos obtenidos",
          subtitle = "según quintil de ingreso per cápita",
-         x = "Quintil",
-         y = NULL) +
+         x = "Quintil de ingreso per cápita",
+         y = NULL,
+         caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
     scale_color_discrete(name = "Título") +
-    scale_x_discrete(labels = c("Q1: 110683 ó menos" = "Primer Quintil", 
-                              "Q2: Más de 110683 a 195000" = "Segundo Quintil", 
-                              "Q3: Más de 195000 a 321523" = "Tercer Quintil", 
-                              "Q4: Más de 321523 a 574085" = "Cuarto Quintil", 
-                              "Q5: Más de 574085" = "Quinto Quintil"))
+    scale_x_discrete(labels = c("Q1: 110683 ó menos" = "1", 
+                              "Q2: Más de 110683 a 195000" = "2", 
+                              "Q3: Más de 195000 a 321523" = "3", 
+                              "Q4: Más de 321523 a 574085" = "4", 
+                              "Q5: Más de 574085" = "5")) +
+    cowplot::theme_cowplot() +
+    theme(legend.text = element_text(size = 8),
+          plot.caption = element_text(size = 6, hjust = 0))
 
+#############
+# GRAFICO 5.3 #
+#############
+
+datos_jc %>% 
+  filter(!is.na(A16B) & !is.na(Q_IPCN) & A16B != "Ignorado") %>%  # Filtrar valores NA
+  group_by(A16B, Q_IPCN) %>%  # Agrupar por título y quintil
+  summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
+  pivot_wider(names_from = Q_IPCN, values_from = conteo, values_fill = 0) %>% #view() # Convertir a formato ancho
+  ggparcoord(columns = 2:6, groupColumn = 1, scale = "globalminmax") +
+  labs(title = "Gráfico 5.2. \nCantidad de títulos obtenidos",
+       subtitle = "según quintil de ingreso per cápita",
+       x = "Quintil de ingreso per cápita",
+       y = "Cantidad de títulos obtenidos",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_color_discrete(name = "Título") +
+  scale_x_discrete(labels = c("Q1: 110683 ó menos" = "1", 
+                              "Q2: Más de 110683 a 195000" = "2", 
+                              "Q3: Más de 195000 a 321523" = "3", 
+                              "Q4: Más de 321523 a 574085" = "4", 
+                              "Q5: Más de 574085" = "5")) +
+  cowplot::theme_cowplot() +
+  theme(legend.text = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0))
 
 #############
 # GRAFICO 6.1 #
