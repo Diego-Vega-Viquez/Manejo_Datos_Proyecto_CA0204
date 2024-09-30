@@ -44,10 +44,11 @@ variables_utiles %>% ggplot(aes(x = NivInst,
                            x = "Nivel de Instrucción",
                            y = "Ingreso Principal Neto del Hogar",
                            fill =  "Nivel de Instrucción",
-                           caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.")+
-                     theme(axis.text.x = element_blank()) 
+                           caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+                     coord_flip() + 
+                     theme(legend.position = "none")
 
-ggsave("../Manejo_de_Datos/graphs/Grafico12.png", 
+ggsave("../Manejo_de_Datos/graphs/Grafico12.2.png", 
        plot = last_plot(), 
        device = "jpg", 
        width = 11.5, # Tamaño: 11.5 pulgadas de ancho
