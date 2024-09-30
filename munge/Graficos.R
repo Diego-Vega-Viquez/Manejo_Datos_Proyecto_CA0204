@@ -453,7 +453,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico10.png",
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 ##############
-# GRAFICO 11 #
+# GRAFICO 11.1 #
 ##############
 
 #Grafico de distribucion de ingreso por universidad publica
@@ -482,6 +482,26 @@ ggsave("../Manejo_de_Datos/graphs/Grafico11.png",
        height = 6, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
+##############
+# GRAFICO 11.2 #
+##############
+
+datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado" & itpn > 0)%>% 
+  ggplot(aes(x = itpn, y = A15B, fill = A15B)) +
+  geom_density_ridges() +
+  geom_vline(xintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
+  annotate("text", y = 0.7, x = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
+  labs(title = "Gráfico 11.2. \nDistribución del Ingreso Neto Total por Persona según Universidad Pública en Costa Rica",
+       subtitle = "Comparación del ingreso total por persona neto entre egresados de universidades públicas, considerando la línea de pobreza en 2023.",
+       x = "Universidad",
+       y = "Ingreso total por persona neto",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.")+
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  scale_x_log10(labels = scales::comma) +
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
 
 
 #Grafico mapa de regiones de planificacion
