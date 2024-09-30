@@ -3,15 +3,6 @@
 
 # Librerías:
 
-install.packages("ProjectTemplate")
-install.packages("devtools")
-install.packages("tidyverse")
-install.packages("cowplot")
-install.packages("openintro")
-install.packages("cowplot")
-install.packages("ggridges")
-install.packages("sf")
-
 library("digest")
 library("tibble")
 library(ProjectTemplate)
@@ -25,7 +16,10 @@ library(openintro)
 library(haven) # Para cargar el .sav
 library(scales)
 library(ggridges) # Para usar geom_density_ridges
-library(sf) library(RColorBrewer)
+library(sf) 
+library(RColorBrewer)
+library(see)
+library(GGally)
 
 datos_con_tipo_de_varibles %>%
   filter(!is.na(A16B)) %>%  # Excluye valores NA
@@ -113,7 +107,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico14.png",
 
 #Grafico de ingreso total personal neto por años de escolaridad segun zona
 datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
-  geom_hex() + 
+  geom_hex(alpha = 0.8) + 
   geom_smooth(method = "lm", se = FALSE, colour = "red") +
   facet_wrap(~ZONA) +
   labs(title = "Gráfico 1. \nRelación entre años de escolaridad e ingreso personal neto",
@@ -246,6 +240,25 @@ ggsave("../Manejo_de_Datos/graphs/Grafico5.png",
        height = 6, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
+
+datos_jc %>% 
+  filter(!is.na(A16B) & !is.na(Q_IPCN) & A16B != "Ignorado") %>%  # Filtrar valores NA
+  group_by(A16B, Q_IPCN) %>%  # Agrupar por título y quintil
+  summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
+  pivot_wider(names_from = Q_IPCN, values_from = conteo, values_fill = 0) %>% #view() # Convertir a formato ancho
+  ggparcoord(columns = 2:6, groupColumn = 1, scale = "uniminmax") +
+    labs(title = "Proporción de títulos obtenidos",
+         subtitle = "según quintil de ingreso per cápita",
+         x = "Quintil",
+         y = NULL) +
+    scale_color_discrete(name = "Título") +
+    scale_x_discrete(labels = c("Q1: 110683 ó menos" = "Primer Quintil", 
+                              "Q2: Más de 110683 a 195000" = "Segundo Quintil", 
+                              "Q3: Más de 195000 a 321523" = "Tercer Quintil", 
+                              "Q4: Más de 321523 a 574085" = "Cuarto Quintil", 
+                              "Q5: Más de 574085" = "Quinto Quintil"))
+
+
 #############
 # GRAFICO 6.1 #
 #############
@@ -299,6 +312,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico6.2.png",
        width = 12, # Tamaño: 12 pulgadas de ancho
        height = 6, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
+
 
 #############
 # GRAFICO 7 #
