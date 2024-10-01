@@ -233,7 +233,7 @@ datos_jc %>% filter(!is.na(A16B)) %>%
         axis.text.x = element_text(size = 8, hjust = 5),
         plot.caption = element_text(size = 6, hjust = 0))  # Tamaño del texto en el eje x
 
-ggsave("../Manejo_de_Datos/graphs/Grafico5.png", 
+ggsave("../Manejo_de_Datos/graphs/Grafico5.1.png", 
        plot = last_plot(), 
        device = "jpg", 
        width = 12, # Tamaño: 12 pulgadas de ancho
@@ -250,8 +250,8 @@ datos_jc %>%
   summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
   pivot_wider(names_from = Q_IPCN, values_from = conteo, values_fill = 0) %>% #view() # Convertir a formato ancho
   ggparcoord(columns = 2:6, groupColumn = 1, scale = "uniminmax") +
-    labs(title = "Gráfico 5.2. \nProporción de títulos obtenidos",
-         subtitle = "según quintil de ingreso per cápita",
+    labs(title = "Gráfico 5.2. \nDistribución de títulos académicos obtenidos por quintil de ingreso per cápita Costa Rica, 2023",
+         subtitle = "Relación entre nivel educativo y nivel de ingreso per cápita según quintiles de ingresos",
          x = "Quintil de ingreso per cápita",
          y = NULL,
          caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
@@ -263,7 +263,15 @@ datos_jc %>%
                               "Q5: Más de 574085" = "5")) +
     cowplot::theme_cowplot() +
     theme(legend.text = element_text(size = 8),
-          plot.caption = element_text(size = 6, hjust = 0))
+          plot.caption = element_text(size = 6, hjust = 0),
+          axis.text.x = element_text(angle = 20, hjust = 1))
+
+ggsave("../Manejo_de_Datos/graphs/Grafico5.2.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 14, # Tamaño: 14 pulgadas de ancho
+       height = 8, # Tamaño: 8 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 #############
 # GRAFICO 5.3 #
@@ -275,8 +283,8 @@ datos_jc %>%
   summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
   pivot_wider(names_from = Q_IPCN, values_from = conteo, values_fill = 0) %>% #view() # Convertir a formato ancho
   ggparcoord(columns = 2:6, groupColumn = 1, scale = "globalminmax") +
-  labs(title = "Gráfico 5.2. \nCantidad de títulos obtenidos",
-       subtitle = "según quintil de ingreso per cápita",
+  labs(title = "Gráfico 5.3. \nNúmero de títulos académicos obtenidos por quintil de ingreso per cápita Costa Rica, 2023",
+       subtitle = "Comparación de la cantidad de títulos académicos obtenidos según quintiles de ingreso per cápita",
        x = "Quintil de ingreso per cápita",
        y = "Cantidad de títulos obtenidos",
        caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
@@ -288,7 +296,15 @@ datos_jc %>%
                               "Q5: Más de 574085" = "5")) +
   cowplot::theme_cowplot() +
   theme(legend.text = element_text(size = 8),
-        plot.caption = element_text(size = 6, hjust = 0))
+        plot.caption = element_text(size = 6, hjust = 0),
+        axis.text.x = element_text(angle = 20, hjust = 1))
+
+ggsave("../Manejo_de_Datos/graphs/Grafico5.3.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 14, # Tamaño: 14 pulgadas de ancho
+       height = 8, # Tamaño: 8 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 #############
 # GRAFICO 6.1 #
@@ -313,8 +329,8 @@ datos_jc %>%
 ggsave("../Manejo_de_Datos/graphs/Grafico6.1.png", 
        plot = last_plot(), 
        device = "jpg", 
-       width = 13, # Tamaño: 12 pulgadas de ancho
-       height = 6, # Tamaño: 6 pulgadas de alto
+       width = 14, # Tamaño: 14 pulgadas de ancho
+       height = 8, # Tamaño: 8 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 #############
@@ -463,7 +479,7 @@ datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado")%>%
   geom_violin() +
   geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
   annotate("text", x = 1.15, y = 150000, label = "Línea de pobreza", color = "black", size = 2, hjust = 0) +  # Texto
-  labs(title = "Gráfico 11. \nDistribución del Ingreso Neto Total por Persona según Universidad Pública en Costa Rica",
+  labs(title = "Gráfico 11.1 \nDistribución del Ingreso Neto Total por Persona según Universidad Pública en Costa Rica",
        subtitle = "Comparación del ingreso total por persona neto entre egresados de universidades públicas, considerando la línea de pobreza en 2023.",
        x = "Universidad",
        y = "Ingreso total por persona neto",
@@ -475,7 +491,7 @@ datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado")%>%
         axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
         plot.caption = element_text(size = 6, hjust = 0))
 
-ggsave("../Manejo_de_Datos/graphs/Grafico11.png", 
+ggsave("../Manejo_de_Datos/graphs/Grafico11.1.png", 
        plot = last_plot(), 
        device = "jpg", 
        width = 11.5, # Tamaño: 11.5 pulgadas de ancho
@@ -503,6 +519,12 @@ datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado" & itpn > 0)%>%
         axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
         plot.caption = element_text(size = 6, hjust = 0))
 
+ggsave("../Manejo_de_Datos/graphs/Grafico11.2.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.5, # Tamaño: 11.5 pulgadas de ancho
+       height = 6, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 #Grafico mapa de regiones de planificacion
 
