@@ -220,29 +220,6 @@ datos_jc <- datos_jc %>%
 datos_jc <- datos_jc %>% 
   mutate(colegio_zona = str_c("Colegio ", A15A, " de zona ", ZONA))
 
-cuadro_primaria_completa <- datos_jc %>% 
-  filter(!is.na(np)) %>%
-  group_by(Tiene_prim_completa, np) %>% 
-  summarise(conteo = n(), 
-            .groups = 'drop') %>%
-  group_by(Tiene_prim_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
-  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
-
-cuadro_secundaria_completa <- datos_jc %>% 
-  filter(!is.na(np)) %>%
-  group_by(Tiene_sec_completa, np) %>% 
-  summarise(conteo = n(), 
-            .groups = 'drop') %>%
-  group_by(Tiene_sec_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
-  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
-
-cuadro_estudios_postsecundarios <- datos_jc %>% 
-  filter(!is.na(np)) %>%
-  group_by(Tiene_est_postsec, np) %>% 
-  summarise(conteo = n(), 
-            .groups = 'drop') %>%
-  group_by(Tiene_est_postsec) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
-  mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
 # Formatear los valores en la columna Q_IPCN
 datos_jc$Q_IPCN <- as.character(datos_jc$Q_IPCN)
@@ -321,3 +298,4 @@ tabla2 <- bind_rows( tabla2, tabla2 %>% summarise( Q_IPCN = "Total",
 tabla2 <- tabla2 %>%
   mutate(across(where(is.numeric), 
                 ~ percent(. /sum(!is.na(variables_comunes$Q_IPCN) & !is.na(variables_comunes$A22A)))))
+
