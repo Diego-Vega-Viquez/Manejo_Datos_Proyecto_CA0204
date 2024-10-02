@@ -21,12 +21,9 @@ library(RColorBrewer)
 library(see)
 library(GGally)
 
-datos_con_tipo_de_varibles %>%
-  filter(!is.na(A16B)) %>%  # Excluye valores NA
-  ggplot(aes(x = A16B)) +
-  geom_bar(colour = "black") +
-  labs( x = "Títulos", 
-        y = "Cantidad")
+##############
+# GRAFICO 12 #
+##############
 
 variables_utiles %>% ggplot(aes(x = NivInst,
                                 y = ipnh,
@@ -49,13 +46,17 @@ ggsave("../Manejo_de_Datos/graphs/Grafico12.2.png",
        height = 6, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
+##############
+# GRAFICO 13 #
+##############
+
 variables_utiles %>% filter(spmn > 0 &!is.na(A16B)) %>% ggplot(aes(x = spmn, 
                                                      y = A16B, 
                                                      fill = A16B, 
                                                      color = A16B)) + 
                      geom_density_ridges(alpha = 0.5) + 
                      scale_x_log10(labels = label_number()) +
-                      labs( title = "Figura 13. \nDistribución del Ingreso Total por persona del Hogar según Grado Académico en Costa Rica, 2023",
+                      labs( title = "Gráfico 13. \nDistribución del Ingreso Total por persona del Hogar según Grado Académico en Costa Rica, 2023",
                             subtitle = "Expresado en colones costarricenses",
                             x = "Ingreso total del hogar neto",
                             y = "Título",
@@ -70,9 +71,13 @@ variables_utiles %>% filter(spmn > 0 &!is.na(A16B)) %>% ggplot(aes(x = spmn,
 ggsave("../Manejo_de_Datos/graphs/Grafico13.png", 
        plot = last_plot(), 
        device = "jpg", 
-       width = 11.5, # Tamaño: 11.5 pulgadas de ancho
-       height = 6, # Tamaño: 6 pulgadas de alto
+       width = 13, # Tamaño: 11.5 pulgadas de ancho
+       height = 8, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
+
+##############
+# GRAFICO 14 #
+##############
 
 variables_utiles %>% filter(!is.na(Q_IPCN)) %>% 
                      ggplot(aes(x = Escolari, 
@@ -81,7 +86,7 @@ variables_utiles %>% filter(!is.na(Q_IPCN)) %>%
                       geom_jitter() +
                       geom_smooth(method = "lm", se = FALSE, colour = "black") +
                       facet_wrap(~Q_IPCN) +
-  labs(title = "Figura 14. \nRelación entre los años de escolaridad e ingreso salario neto",
+  labs(title = "Gráfico 14. \nRelación entre los años de escolaridad e ingreso salario neto",
        x = "Años de escolaridad",
        y = "Ingreso principal salario neto total",
        colour = "Quintiles de ingreso per cápita \ndel hogar neto \npor región de planificación",
@@ -93,8 +98,8 @@ variables_utiles %>% filter(!is.na(Q_IPCN)) %>%
 ggsave("../Manejo_de_Datos/graphs/Grafico14.png", 
        plot = last_plot(), 
        device = "jpg", 
-       width = 11.5, # Tamaño: 11.5 pulgadas de ancho
-       height = 6, # Tamaño: 6 pulgadas de alto
+       width = 16, # Tamaño: 11.5 pulgadas de ancho
+       height = 8, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 ## USAR ForReg que es el rezago
