@@ -547,3 +547,208 @@ ggplot(my_sf) +
   geom_sf(fill = "#69b3a2", color = "white") +
   theme_void()
 
+####################################################################
+
+#######################################################
+#Gráficos relacionados con el tipo de centro educativo#
+#######################################################
+
+#Grafico de nivel de pobreza segun tipo de centro educativo al que asistio
+graf_np_vs_tipo_colegio <- as.data.frame(table(datos_jc$np, datos_jc$A15A)) %>% filter(Var2 != "Ignorado")
+graf_np_vs_tipo_colegio %>% ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
+  geom_col(position = "fill") +
+  labs(x = "Tipo de centro educativo al que asistió",
+       title = "Gráfico # \nNivel de pobreza según tipo de\ncentro educativo al que se asistió",
+       y = "",
+       fill = "Nivel de pobreza",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.")+
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  cowplot::theme_cowplot() +
+  theme(axis.text.x = element_text(size = 8, angle = 20, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
+
+#Graficos de distribucion del itpn segun centro educativo al que se asistio
+datos_jc %>% filter(A15A != "Ignorado" & itpn > 0) %>% 
+  ggplot(aes(x = itpn, y = fct_reorder(A15A, itpn, median), fill = A15A)) +
+  geom_density_ridges() +
+  labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún tipo de centro educativo al que se asistió",
+       x = "Ingreso total neto por persona",
+       y = "Tipo de centro educativo",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_x_log10(labels = scales::comma) +
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
+
+datos_jc %>% filter(A15A != "Ignorado" & itpn > 0) %>% 
+  ggplot(aes(x = itpn, y = fct_reorder(A15A, itpn, median), fill = A15A)) +
+  geom_boxplot() +
+  labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún tipo de centro educativo al que se asistió",
+       x = "Ingreso total neto por persona",
+       y = "Tipo de centro educativo",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_x_log10(labels = scales::comma) +
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
+
+
+#Grafico de evolucion de la distribucion del tipo de centro educativo al que se asistio segun quintil de ingreso per capita neto
+as.data.frame(prop.table(table(datos_jc$A15A, datos_jc$Q_IPCN), margin = 2)) %>% 
+  filter(Var1 != "Ignorado") %>% 
+  mutate(Var2 = str_extract(Var2, "\\d")) %>% 
+  mutate(Var2 = parse_number(Var2)) %>% 
+  ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
+  geom_area(position = "fill") +
+  labs(title = "Gráfico #. \nDistribución de tipo de centro educativo asistido por quintil de ingreso per cápita Costa Rica, 2023",
+       subtitle = "Relación entre el tipo de centro educativo al que se asistió y nivel de ingreso per cápita según quintiles de ingresos",
+       x = "Quintil de ingreso per cápita",
+       y = NULL,
+       fill = "Tipo de centro educativo",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_fill_brewer(palette = "Spectral") +
+  cowplot::theme_cowplot() +
+  theme(legend.text = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0),
+        axis.text.x = element_text(hjust = 1))
+
+###############################################
+#Gráficos relacionados con universidad pública#
+###############################################
+ 
+#Grafico de nivel de pobreza segun la universidad publica a la que se asistio
+tab_np_vs_univ %>% 
+  pivot_longer(cols = UCR:UTN,
+               names_to = "Universidad",
+               values_to = "Proporcion") %>% 
+  mutate(Proporcion = Proporcion / 100) %>% 
+  ggplot(aes(x = fct_relevel(Universidad, c("UNED", "UTN", "UNA", "UCR", "TEC")), y = Proporcion, fill = Nivel_de_pobreza)) +
+  geom_col() +
+  labs(x = "Universidad pública a la que se asistió",
+       title = "Gráfico # \nNivel de pobreza según universidad pública a la que se asistió",
+       y = "",
+       fill = "Nivel de pobreza",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.")+
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  cowplot::theme_cowplot() +
+  theme(axis.text.x = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0))
+
+#Grafico de la cantidad de personas pobres que fueron a una universidad publica, por universidad segun su formacion educativa formal
+datos_jc %>% 
+  filter(!is.na(A15B) & !is.na(ForReg) & np != "No pobre" & A15B != "Ignorado") %>% 
+  ggplot(aes(x = fct_infreq(A15B), fill = fct_infreq(ForReg))) +
+    geom_bar() +
+  labs(title = "Gráfico #\nCantidad de personas en condición de pobreza por universidad",
+       subtitle = "según formación educativa formal",
+       x = "Universidad pública a la que se asistió",
+       y = "Cantidad de personas en condición de pobreza",
+       fill = "Formación educativa formal",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  cowplot::theme_cowplot() +
+  theme(plot.caption = element_text(size = 6, hjust = 0),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_text(size = 8),
+        axis.title.y = element_text(size = 10),
+        axis.title.x = element_text(size = 10))
+
+#Graficos de distribucion del itpn segun universidad publica a la que se asistio
+datos_jc %>% filter(A15B != "Ignorado" & itpn > 0) %>% 
+  ggplot(aes(x = itpn, y = fct_reorder(A15B, itpn, median), fill = A15B)) +
+  geom_density_ridges() +
+  labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún universidad pública a la que se asistió",
+       x = "Ingreso total neto por persona",
+       y = "Universidad pública a la que se asistió",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_x_log10(labels = scales::comma) +
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 8, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0))
+
+datos_jc %>% filter(A15B != "Ignorado" & itpn > 0) %>% 
+  ggplot(aes(x = itpn, y = fct_reorder(A15B, itpn, median), fill = A15B)) +
+  geom_boxplot() +
+  labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún universidad pública a la que se asistió",
+       x = "Ingreso total neto por persona",
+       y = "Universidad pública a la que se asistió",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_x_log10(labels = scales::comma) +
+  scale_fill_brewer(palette = "Set1") +  # Paleta de colores
+  cowplot::theme_cowplot() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 8, hjust = 1),
+        plot.caption = element_text(size = 6, hjust = 0),
+        axis.title.y = element_text(size = 12))
+
+################################################
+#Gráficos relacionados con nivel de instruccion#
+################################################
+
+#Grafico de evolucion de nivel de pobreza segun nivel de instruccion
+
+as.data.frame(table(datos_jc$np, fct_collapse(datos_jc$NivInst, 
+                                              "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
+                                              "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
+                                              "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta")))) %>% 
+  rename(Nivel_de_pobreza = Var1) %>% 
+  filter(Var2 != "Ignorado") %>% 
+  rename(NivInst = Var2) %>% 
+  ggplot(aes(x = NivInst, y = Freq, fill = Nivel_de_pobreza)) + 
+  geom_col(position = "fill") +
+  labs(title = "Gráfico #.\nNivel de pobreza según nivel de instrucción",
+     subtitle = "en porcentajes",
+     x = "Nivel de instrucción",
+     y = NULL,
+     fill = "Nivel de pobreza",
+     caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_fill_brewer(palette = "Set1") +
+  cowplot::theme_cowplot() +
+  theme(legend.text = element_text(size = 8),
+        plot.caption = element_text(size = 6, hjust = 0),
+        axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
+
+#Grafico de la evolucion de la estabilidad laboral segun nivel de instruccion
+as.data.frame(prop.table(table(datos_jc$Estabili, fct_collapse(datos_jc$NivInst, 
+                                              "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
+                                              "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
+                                              "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta"))), margin = 2)) %>% 
+  rename(Estabilidad = Var1) %>% 
+  filter(Var2 != "Ignorado") %>% 
+  rename(NivInst = Var2) %>% 
+  filter(Estabilidad == "Empleo permanente") %>% 
+  ggplot(aes(x = NivInst, y = Freq, color = Estabilidad, group = Estabilidad)) +
+    geom_line(color = "blue") +
+  labs(title = "Gráfico #.\nPorcentaje de personas con empleo permanente por nivel de instrucción",
+     x = "Nivel de instrucción",
+     y = NULL,
+     caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_fill_brewer(palette = "Set1") +
+  cowplot::theme_cowplot() +
+  theme(plot.caption = element_text(size = 6, hjust = 0),
+        axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
+
+#Grafico de porcentaje de personas satisfechas con su trabajo por nivel de instruccion
+as.data.frame(prop.table(table(datos_jc$InsLab, fct_collapse(datos_jc$NivInst, 
+                                                               "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
+                                                               "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
+                                                               "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta"))), margin = 2)) %>% 
+  rename(Satisfaccion = Var1) %>% 
+  filter(Var2 != "Satisfacción ignorada") %>% 
+  rename(NivInst = Var2) %>% 
+  filter(Satisfaccion == "Satisfecho", NivInst != "Ignorado") %>% 
+  ggplot(aes(x = NivInst, y = Freq, color = Satisfaccion, group = Satisfaccion)) +
+  geom_line(color = "red") +
+  labs(title = "Gráfico #.\nPorcentaje de personas satisfechas con su empleo por nivel de instrucción",
+       x = "Nivel de instrucción",
+       y = NULL,
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_fill_brewer(palette = "Set1") +
+  cowplot::theme_cowplot() +
+  theme(plot.caption = element_text(size = 6, hjust = 0),
+        axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
