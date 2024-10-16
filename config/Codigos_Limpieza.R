@@ -125,7 +125,8 @@ datos_con_tipo_de_varibles$IPM_PS4 <- as_factor(datos_con_tipo_de_varibles$IPM_P
 datos_con_tipo_de_varibles$Q_ZON_IPCN <- as_factor(datos_con_tipo_de_varibles$Q_ZON_IPCN)
 datos_con_tipo_de_varibles$Q_REG_IPCN <- as_factor(datos_con_tipo_de_varibles$Q_REG_IPCN)
 datos_con_tipo_de_varibles$Q_IPCN <- as_factor(datos_con_tipo_de_varibles$Q_IPCN)
-
+datos_con_tipo_de_varibles$Estabili <- as_factor(datos_con_tipo_de_varibles$Estabili)
+datos_con_tipo_de_varibles$InsLab <- as_factor(datos_con_tipo_de_varibles$InsLab)
 
 variables_utiles <- datos_con_tipo_de_varibles %>% select(A4,        A5,
                                                           LugNac,    A13,
@@ -187,20 +188,23 @@ variables_utiles$Q_IPCN <- factor(variables_utiles$Q_IPCN,
 
 # escogencia de datos JOSE
 datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
-                                                  EFI, CalViv,
-                                                  V19,TamViv,
                                                   A3, A4,
                                                   A5, A6,
                                                   CondMig, A15A,
                                                   A15B,NivInst,
-                                                  Escolari, ForReg,
-                                                  A16B, A17,
-                                                  A20A, ForNoReg,
-                                                  A22A,itpn,
+                                                  Escolari, REZ_ESC,
+                                                  ForReg,
+                                                  A16B,
+                                                  ForNoReg,
+                                                  A22A, A23,
+                                                  Estabili, InsLab,
+                                                  itpn, lp,
                                                   np, IPM_Pobreza, 
-                                                  Q_IPCN, ipcn)
+                                                  IPM_Intensidad,
+                                                  Q_IPCN)
 
 datos_jc <- datos_jc %>% filter(A5 >= 18 & A5 <= 60)  
+
 
 datos_jc <- datos_jc %>% 
   mutate(Tiene_prim_completa = case_when(NivInst == "Sin nivel de instrucción" | 
