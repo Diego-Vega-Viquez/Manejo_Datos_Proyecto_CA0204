@@ -117,7 +117,6 @@ datos_con_tipo_de_varibles$RamaEmpPri <- as_factor(datos_con_tipo_de_varibles$Ra
 datos_con_tipo_de_varibles$np <- as_factor(datos_con_tipo_de_varibles$np)
 datos_con_tipo_de_varibles$E1 <- as_factor(datos_con_tipo_de_varibles$E1)
 datos_con_tipo_de_varibles$IPM_Pobreza <- as_factor(datos_con_tipo_de_varibles$IPM_Pobreza)
-datos_con_tipo_de_varibles$IPM_Intensidad <- as_factor(datos_con_tipo_de_varibles$IPM_Intensidad)
 datos_con_tipo_de_varibles$ClasPubPrivPri <- as_factor(datos_con_tipo_de_varibles$ClasPubPrivPri)
 datos_con_tipo_de_varibles$G3 <- as_factor(datos_con_tipo_de_varibles$G3)
 datos_con_tipo_de_varibles$IPM_PS2 <- as_factor(datos_con_tipo_de_varibles$IPM_PS2)
@@ -192,7 +191,7 @@ datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
                                                   A5, A6,
                                                   CondMig, A15A,
                                                   A15B,NivInst,
-                                                  Escolari, REZ_ESC,
+                                                  Escolari,
                                                   ForReg,
                                                   A16B,
                                                   ForNoReg,
@@ -204,25 +203,6 @@ datos_jc <- datos_con_tipo_de_varibles %>% select(REGION, ZONA,
                                                   Q_IPCN)
 
 datos_jc <- datos_jc %>% filter(A5 >= 18 & A5 <= 60)  
-
-
-datos_jc <- datos_jc %>% 
-  mutate(Tiene_prim_completa = case_when(NivInst == "Sin nivel de instrucción" | 
-                                        NivInst == "Primaria incompleta" ~ "Sin primaria completa",
-                                        TRUE ~ "Con primaria completa"))
-datos_jc <- datos_jc %>% 
-  mutate(Tiene_sec_completa = case_when(NivInst == "Secundaria técnica completa" |
-                                           NivInst == "Secundaria académica completa" |
-                                           NivInst == "Educación superior de pregrado y grado" |
-                                           NivInst == "Educación superior de posgrado" ~ "Con secundaria completa",
-                                          TRUE ~ "Sin secundaria completa"))
-datos_jc <- datos_jc %>% 
-  mutate(Tiene_est_postsec = case_when(NivInst == "Educación superior de pregrado y grado" | 
-                                           NivInst == "Educación superior de posgrado" ~ "Con estudios postsecundarios",
-                                         TRUE ~ "Sin estudios postsecundarios"))
-
-datos_jc <- datos_jc %>% 
-  mutate(colegio_zona = str_c("Colegio ", A15A, " de zona ", ZONA))
 
 
 # Formatear los valores en la columna Q_IPCN

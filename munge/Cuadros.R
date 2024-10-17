@@ -159,6 +159,119 @@ tab_satisf_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$InsLab, datos_j
   pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_satisf_vs_nivinst)
 
+#Tabla: distribucion del ingreso por nivel de instruccion
+tab_dist_itpn_nivinst <- datos_jc %>% 
+  filter(NivInst != "Ignorado") %>% 
+  mutate(NivInst = fct_collapse(NivInst,
+                                "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
+                                "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
+                                "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta"))) %>% 
+  group_by(NivInst) %>%
+  summarize(
+    n = n(),                      # Conteo de observaciones
+    media_itpn = mean(itpn, na.rm = TRUE),   # Media de itpn, omitiendo NA
+    ds_itpn = sd(itpn, na.rm = TRUE),       # Desviación estándar de itpn
+    min_itpn = min(itpn, na.rm = TRUE),     # Mínimo de itpn
+    Q1_itpn = quantile(itpn, 0.25, na.rm = TRUE),  # Primer cuartil
+    Q2_itpn = quantile(itpn, 0.50, na.rm = TRUE),  # Mediana (segundo cuartil)
+    Q3_itpn = quantile(itpn, 0.75, na.rm = TRUE),    
+    max_itpn = max(itpn, na.rm = TRUE)      # Máximo de itpn
+  )
+view(tab_dist_itpn_nivinst)
 
+#Tabla de evolucion de la distribucion del nivl de instruccion por quintil de ingreso per capita neto
+tab_evol_nivinst_QIPCN <- as.data.frame(prop.table(table(fct_collapse(datos_jc$NivInst, 
+                                                                      "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
+                                                                      "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
+                                                                      "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta")), 
+                                                         datos_jc$Q_IPCN), margin = 2)) %>% 
+  filter(Var1 != "Ignorado") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_evol_nivinst_QIPCN)
 
+#########################################
+#Tablas relacionadas con título obtenido#
+#########################################
+
+#Tabla: nivel de pobreza segun titulo obtenido
+tab_np_vs_titulo <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A16B), margin = 2)) %>% 
+  mutate(Freq = round(Freq * 100, 2)) %>% 
+  rename(Nivel_de_pobreza = Var1) %>% 
+  filter(Var2 != "Ignorado") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_np_vs_titulo)
+
+#Tabla: estabilidad laboral segun titulo obtenido
+tab_estabili_vs_titulo <- as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$A16B), margin = 2)) %>% 
+  mutate(Freq = round(Freq * 100, 2)) %>% 
+  rename(Estabilidad_laboral = Var1) %>% 
+  filter(Var2 != "Ignorado", Estabilidad_laboral != "Estabilidad Ignorada") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_estabili_vs_titulo)
+
+#Tabla: satisfaccion laboral segun titulo obtenido
+tab_satisf_vs_titulo <- as.data.frame(prop.table(table(datos_jc$InsLab, datos_jc$A16B), margin = 2)) %>% 
+  mutate(Freq = round(Freq * 100, 2)) %>% 
+  rename(Satisfaccion_laboral = Var1) %>% 
+  filter(Var2 != "Ignorado", Satisfaccion_laboral != "Satisfacción ignorada") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_satisf_vs_titulo)
+
+#Tabla: distribucion del ingreso segun titulo obtenido
+tab_dist_itpn_titulo <- datos_jc %>% 
+  filter(A16B != "Ignorado") %>% 
+  group_by(A16B) %>%
+  summarize(
+    n = n(),                      # Conteo de observaciones
+    media_itpn = mean(itpn, na.rm = TRUE),   # Media de itpn, omitiendo NA
+    ds_itpn = sd(itpn, na.rm = TRUE),       # Desviación estándar de itpn
+    min_itpn = min(itpn, na.rm = TRUE),     # Mínimo de itpn
+    Q1_itpn = quantile(itpn, 0.25, na.rm = TRUE),  # Primer cuartil
+    Q2_itpn = quantile(itpn, 0.50, na.rm = TRUE),  # Mediana (segundo cuartil)
+    Q3_itpn = quantile(itpn, 0.75, na.rm = TRUE),    
+    max_itpn = max(itpn, na.rm = TRUE)      # Máximo de itpn
+  )
+view(tab_dist_itpn_titulo)
+
+#Tabla de evolucion de la distribucion de los titulos obtenidos por quintil de ingreso per capita neto
+tab_evol_titulo_QIPCN <- as.data.frame(prop.table(table(datos_jc$A16B,datos_jc$Q_IPCN), margin = 2)) %>% 
+  filter(Var1 != "Ignorado") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_evol_titulo_QIPCN)
+
+################################################
+#Tablas relacionadas con dominio segundo idioma#
+################################################
+
+#Tabla: estabilidad laboral segun nivel de instruccion 
+tab_estabili_vs_dom_2_idiom <- as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$A22A), margin = 2)) %>% 
+  mutate(Freq = round(Freq * 100, 2)) %>% 
+  rename(Estabilidad_laboral = Var1) %>% 
+  filter(Var2 != "Ignorado", Estabilidad_laboral != "Estabilidad Ignorada") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_estabili_vs_dom_2_idiom)
+
+#Tabla: nivel de pobreza segun nivel de instruccion 
+tab_np_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A22A), margin = 2)) %>% 
+  mutate(Freq = round(Freq * 100, 2)) %>% 
+  rename(Nivel_de_pobreza = Var1) %>% 
+  filter(Var2 != "Ignorado") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq)
+view(tab_np_vs_nivinst)
+
+#Tabla: distribucion del ingreso segun titulo obtenido
+tab_dist_itpn_dom_2_idiom <- datos_jc %>% 
+  filter(A22A != "Ignorado") %>% 
+  group_by(A22A) %>%
+  summarize(
+    n = n(),                      # Conteo de observaciones
+    media_itpn = mean(itpn, na.rm = TRUE),   # Media de itpn, omitiendo NA
+    ds_itpn = sd(itpn, na.rm = TRUE),       # Desviación estándar de itpn
+    min_itpn = min(itpn, na.rm = TRUE),     # Mínimo de itpn
+    Q1_itpn = quantile(itpn, 0.25, na.rm = TRUE),  # Primer cuartil
+    Q2_itpn = quantile(itpn, 0.50, na.rm = TRUE),  # Mediana (segundo cuartil)
+    Q3_itpn = quantile(itpn, 0.75, na.rm = TRUE),    
+    max_itpn = max(itpn, na.rm = TRUE)      # Máximo de itpn
+  )
+view(tab_dist_itpn_dom_2_idiom)
 
