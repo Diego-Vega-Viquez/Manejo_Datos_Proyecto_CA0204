@@ -112,7 +112,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico14.png",
 #############
 
 #Grafico de ingreso total personal neto por años de escolaridad segun zona
-datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
+ENAHO %>% ggplot(aes(x = Escolari, y = itpn, group = ZONA)) +
   geom_hex(alpha = 0.8) + 
   geom_smooth(method = "lm", se = FALSE, colour = "red") +
   facet_wrap(~ZONA) +
@@ -140,9 +140,9 @@ ggsave("../Manejo_de_Datos/graphs/Grafico1.png",
 
 #Grafico de ingreso total personal neto por años de escolaridad segun region de planificacion 
 
-datos_jc$REGION <- as_factor(datos_jc$REGION) 
+ENAHO$REGION <- as_factor(ENAHO$REGION) 
 
-datos_jc %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)) +
+ENAHO %>% ggplot(aes(x = Escolari, y = itpn, group = REGION, colour = REGION)) +
   geom_point() + 
   geom_smooth(method = "lm", se = FALSE, colour = "black") +
   facet_wrap(~REGION) +
@@ -168,7 +168,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico2.png",
 #############
 
 #Grafico de pobreza segun nivel de instrucción
-datos_jc %>% filter(!is.na(np)) %>% 
+ENAHO %>% filter(!is.na(np)) %>% 
   ggplot(aes(x = np, fill = NivInst)) +
   geom_bar(position = "fill") +
   labs(title = "Grafico 3. \nDistribución de la Pobreza según Nivel de Instrucción en Costa Rica",
@@ -195,7 +195,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico3.png",
 #############
 
 #Grafico de pobreza multidimensional segun nivel de instruccion
-datos_jc %>% filter(!is.na(IPM_Pobreza)) %>% 
+ENAHO %>% filter(!is.na(IPM_Pobreza)) %>% 
   ggplot(aes(x = IPM_Pobreza, fill = NivInst)) +
   geom_bar(position = "fill") +
   labs(title = "Gráfico 4. \nDistribución de la Pobreza Multidimensional según Nivel de Instrucción en Costa Rica",
@@ -222,7 +222,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico4.png",
 #############
 
 #Numero de titulos obtenidos segun quintil de ingreso per capita
-datos_jc %>% filter(!is.na(A16B)) %>%
+ENAHO %>% filter(!is.na(A16B)) %>%
   ggplot(aes(x = Q_IPCN, fill = A16B)) +
   geom_bar(position = "dodge") +  # Colocar barras separadas dentro de cada cuartil
   labs(title = "Gráfico 5.1. \nDistribución de Títulos Obtenidos según Quintil de Ingreso Per Cápita en Costa Rica",
@@ -250,7 +250,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico5.1.png",
 # GRAFICO 5.2 #
 #############
 
-datos_jc %>% 
+ENAHO %>% 
   filter(!is.na(A16B) & !is.na(Q_IPCN) & A16B != "Ignorado") %>%  # Filtrar valores NA
   group_by(A16B, Q_IPCN) %>%  # Agrupar por título y quintil
   summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
@@ -283,7 +283,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico5.2.png",
 # GRAFICO 5.3 #
 #############
 
-datos_jc %>% 
+ENAHO %>% 
   filter(!is.na(A16B) & !is.na(Q_IPCN) & A16B != "Ignorado") %>%  # Filtrar valores NA
   group_by(A16B, Q_IPCN) %>%  # Agrupar por título y quintil
   summarise(conteo = n()) %>%  # Contar el número de personas en cada grupo
@@ -317,7 +317,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico5.3.png",
 #############
 
 #Grafico de distribucion del ingreso segun dominio de un segundo idioma
-datos_jc %>% 
+ENAHO %>% 
   ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
   geom_boxplot() +  # Omitir valores extremos
   geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
@@ -343,7 +343,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico6.1.png",
 # GRAFICO 6.2 #
 #############
 
-datos_jc %>% 
+ENAHO %>% 
   ggplot(aes(x = A22A, y = itpn, fill = A22A)) +
   geom_violin(outlier.shape = NA) +  # Omitir valores extremos
   geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
@@ -373,7 +373,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico6.2.png",
 
 #Grafico de ingreso segun formacion educativa forma
 
-datos_jc %>% 
+ENAHO %>% 
   filter(!is.na(ForReg) & itpn > 0 & ForReg != "Ignorada" & ForReg != "No definida") %>%  # Filtrar valores NA y menores o iguales a 0
   ggplot(aes(x = itpn, y = ForReg, fill = ForReg, color = ForReg)) +
   geom_density_ridges(alpha = 0.5) +
@@ -404,7 +404,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico7.png",
 #############
   
 #Graficos de porcentaje de pobreza segun si se tiene secundaria o primaria completa
-datos_jc %>% filter(!is.na(np))%>% 
+ENAHO %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_prim_completa, fill = np)) +
   geom_bar(position = "fill") +
   labs(title = "Gráfico 8. \nDistribución de la Pobreza Multidimensional por Nivel de Educación en Costa Rica",
@@ -428,7 +428,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico8.png",
 # GRAFICO 9 #
 #############
 
-datos_jc %>% filter(!is.na(np))%>% 
+ENAHO %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_sec_completa, fill = np)) +
   geom_bar(position = "fill") +
   labs(title = "Gráfico 9. \nDistribución de la Pobreza según Nivel de Educación Secundaria en Costa Rica",
@@ -453,7 +453,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico9.png",
 # GRAFICO 10 #
 ##############
 
-datos_jc %>% filter(!is.na(np))%>% 
+ENAHO %>% filter(!is.na(np))%>% 
   ggplot(aes(x = Tiene_est_postsec, fill = np)) +
   geom_bar(position = "fill") +
   labs(title = "Gráfico 10. \nDistribución de la Pobreza según Nivel de Educación Postsecundaria en Costa Rica",
@@ -480,7 +480,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico10.png",
 
 #Grafico de distribucion de ingreso por universidad publica
 
-datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado")%>% 
+ENAHO %>% filter(!is.na(A15B) & A15B != "Ignorado")%>% 
   ggplot(aes(x = A15B, y = itpn, fill = A15B)) +
   geom_violin() +
   geom_hline(yintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
@@ -508,7 +508,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico11.1.png",
 # GRAFICO 11.2 #
 ##############
 
-datos_jc %>% filter(!is.na(A15B) & A15B != "Ignorado" & itpn > 0)%>% 
+ENAHO %>% filter(!is.na(A15B) & A15B != "Ignorado" & itpn > 0)%>% 
   ggplot(aes(x = itpn, y = A15B, fill = A15B)) +
   geom_density_ridges() +
   geom_vline(xintercept = 129038, color = "red", linetype = "dashed", size = 1) +  # Línea horizontal
@@ -555,8 +555,8 @@ ggplot(my_sf) +
 #######################################################
 
 #Grafico de nivel de pobreza segun tipo de centro educativo al que asistio
-graf_np_vs_tipo_colegio <- as.data.frame(table(datos_jc$np, datos_jc$A15A)) %>% filter(Var2 != "Ignorado")
-graf_np_vs_tipo_colegio %>% ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
+as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>% filter(Var2 != "Ignorado") %>% 
+ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
   geom_col(position = "fill") +
   labs(x = "Tipo de centro educativo al que asistió",
        title = "Gráfico # \nNivel de pobreza según tipo de\ncentro educativo al que se asistió",
@@ -569,7 +569,7 @@ graf_np_vs_tipo_colegio %>% ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
         plot.caption = element_text(size = 6, hjust = 0))
 
 #Graficos de distribucion del itpn segun centro educativo al que se asistio
-datos_jc %>% filter(A15A != "Ignorado" & itpn > 0) %>% 
+ENAHO %>% filter(A15A != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15A, itpn, median), fill = A15A)) +
   geom_density_ridges() +
   labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún tipo de centro educativo al que se asistió",
@@ -583,7 +583,7 @@ datos_jc %>% filter(A15A != "Ignorado" & itpn > 0) %>%
         axis.text.y = element_text(size = 8, angle = 25, hjust = 1),
         plot.caption = element_text(size = 6, hjust = 0))
 
-datos_jc %>% filter(A15A != "Ignorado" & itpn > 0) %>% 
+ENAHO %>% filter(A15A != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15A, itpn, median), fill = A15A)) +
   geom_boxplot() +
   labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún tipo de centro educativo al que se asistió",
@@ -599,7 +599,7 @@ datos_jc %>% filter(A15A != "Ignorado" & itpn > 0) %>%
 
 
 #Grafico de evolucion de la distribucion del tipo de centro educativo al que se asistio segun quintil de ingreso per capita neto (version ultra wow)
-as.data.frame(prop.table(table(datos_jc$A15A, datos_jc$Q_IPCN), margin = 2)) %>% 
+as.data.frame(prop.table(table(ENAHO$A15A, ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
   mutate(Var2 = parse_number(Var2)) %>% 
@@ -661,7 +661,7 @@ tab_np_vs_univ %>%
         plot.caption = element_text(size = 6, hjust = 0))
 
 #Grafico de la cantidad de personas pobres que fueron a una universidad publica, por universidad segun su formacion educativa formal
-datos_jc %>% 
+ENAHO %>% 
   filter(!is.na(A15B) & !is.na(ForReg) & np != "No pobre" & A15B != "Ignorado") %>% 
   ggplot(aes(x = fct_infreq(A15B), fill = fct_infreq(ForReg))) +
     geom_bar() +
@@ -679,7 +679,7 @@ datos_jc %>%
         axis.title.x = element_text(size = 10))
 
 #Grafico de la proporcion de personas no pobres que fueron a universidad publica, por universidad segun formacion educativa formal
-datos_jc %>% 
+ENAHO %>% 
   filter(!is.na(A15B) & !is.na(ForReg) & np == "No pobre" & A15B != "Ignorado") %>% 
   ggplot(aes(x = fct_infreq(A15B), fill = fct_infreq(ForReg))) +
   geom_bar() +
@@ -698,7 +698,7 @@ datos_jc %>%
 
 
 #Graficos de distribucion del itpn segun universidad publica a la que se asistio
-datos_jc %>% filter(A15B != "Ignorado" & itpn > 0) %>% 
+ENAHO %>% filter(A15B != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15B, itpn, median), fill = A15B)) +
   geom_density_ridges() +
   labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún universidad pública a la que se asistió",
@@ -712,7 +712,7 @@ datos_jc %>% filter(A15B != "Ignorado" & itpn > 0) %>%
         axis.text.y = element_text(size = 8, hjust = 1),
         plot.caption = element_text(size = 6, hjust = 0))
 
-datos_jc %>% filter(A15B != "Ignorado" & itpn > 0) %>% 
+ENAHO %>% filter(A15B != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15B, itpn, median), fill = A15B)) +
   geom_boxplot() +
   labs(title = "Grafico #\nDistribución del ingreso total neto por persona\nsegún universidad pública a la que se asistió",
@@ -733,7 +733,7 @@ datos_jc %>% filter(A15B != "Ignorado" & itpn > 0) %>%
 
 #Grafico de evolucion de nivel de pobreza segun nivel de instruccion
 
-as.data.frame(table(datos_jc$np, fct_collapse(datos_jc$NivInst, 
+as.data.frame(table(ENAHO$np, fct_collapse(ENAHO$NivInst, 
                                               "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                               "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
                                               "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta")))) %>% 
@@ -755,7 +755,7 @@ as.data.frame(table(datos_jc$np, fct_collapse(datos_jc$NivInst,
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
 
 #Grafico de la evolucion de la estabilidad laboral segun nivel de instruccion
-as.data.frame(prop.table(table(datos_jc$Estabili, fct_collapse(datos_jc$NivInst, 
+as.data.frame(prop.table(table(ENAHO$Estabili, fct_collapse(ENAHO$NivInst, 
                                               "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                               "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
                                               "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta"))), margin = 2)) %>% 
@@ -775,7 +775,7 @@ as.data.frame(prop.table(table(datos_jc$Estabili, fct_collapse(datos_jc$NivInst,
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
 
 #Grafico de porcentaje de personas satisfechas con su trabajo por nivel de instruccion
-as.data.frame(prop.table(table(datos_jc$InsLab, fct_collapse(datos_jc$NivInst, 
+as.data.frame(prop.table(table(ENAHO$InsLab, fct_collapse(ENAHO$NivInst, 
                                                                "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                                                "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
                                                                "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta"))), margin = 2)) %>% 
@@ -795,7 +795,7 @@ as.data.frame(prop.table(table(datos_jc$InsLab, fct_collapse(datos_jc$NivInst,
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
 
 #Grafico: distribucion del itpn por nivel de instruccion (version ultra mejorada)
-datos_jc %>% 
+ENAHO %>% 
   filter(NivInst != "Ignorado" & itpn > 0) %>%
   mutate(NivInst = fct_collapse(NivInst,
                                 "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
@@ -831,11 +831,11 @@ datos_jc %>%
   )
 
 #Grafico evolucion de la distribucion del nivel de instruccion por quintil de ingreso 
-as.data.frame(prop.table(table(fct_collapse(datos_jc$NivInst, 
+as.data.frame(prop.table(table(fct_collapse(ENAHO$NivInst, 
                                             "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                             "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
                                             "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta")), 
-                               datos_jc$Q_IPCN), margin = 2)) %>% 
+                               ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
   mutate(Var2 = parse_number(Var2)) %>% 
@@ -859,7 +859,7 @@ as.data.frame(prop.table(table(fct_collapse(datos_jc$NivInst,
 
 #Grafico correlacion entre años de escolaridad e ingreso total por persona neto
 
-datos_jc %>% 
+ENAHO %>% 
   ggplot(aes(x = Escolari, y = itpn, color = ZONA)) +
   # Cambiar a puntos con transparencia para evitar solapamientos y tamaño adecuado
   geom_point(alpha = 0.6, size = 2) +
@@ -896,7 +896,7 @@ datos_jc %>%
 
 #Grafico correlacion entre años de escolaridad e intensidad de la pobreza multidimensional
 
-datos_jc %>% 
+ENAHO %>% 
   ggplot(aes(x = Escolari, y = IPM_Intensidad, color = ZONA)) +
   # Cambiar a puntos con transparencia para evitar solapamientos y tamaño adecuado
   geom_point(alpha = 0.6, size = 2) +
@@ -930,13 +930,28 @@ datos_jc %>%
     plot.caption = element_text(size = 7, hjust = 0)
   )
 
+ENAHO %>% filter(!is.na(Q_IPCN)) %>% 
+  ggplot(aes(x = Escolari, 
+             y = itpn, 
+             color = Q_IPCN)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE, colour = "black") +
+  facet_wrap(~Q_IPCN) +
+  labs(title = "Gráfico 14. \nRelación entre los años de escolaridad e ingreso total por persona neto",
+       x = "Años de escolaridad",
+       y = "Ingreso principal por persona neto",
+       colour = "Quintiles de ingreso per cápita \ndel hogar neto \npor región de planificación",
+       caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales.") +
+  scale_y_log10(labels = label_number()) +
+  scale_colour_brewer(palette = "Set1") +  # Paleta de colores para los quintiles
+  theme_cowplot()
 ###########################################
 #Gráficos relacionados con título obtenido#
 ###########################################
 
 #Grafico de evolucion de nivel de pobreza segun titulo
 
-as.data.frame(table(datos_jc$np, datos_jc$A16B)) %>% 
+as.data.frame(table(ENAHO$np, ENAHO$A16B)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
   rename(titulo = Var2) %>% 
@@ -955,7 +970,7 @@ as.data.frame(table(datos_jc$np, datos_jc$A16B)) %>%
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
 
 #Grafico de la evolucion de la estabilidad laboral segun titulo obtenido
-as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$A16B), margin = 2)) %>% 
+as.data.frame(prop.table(table(ENAHO$Estabili, ENAHO$A16B), margin = 2)) %>% 
   rename(Estabilidad = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
   rename(titulo = Var2) %>% 
@@ -972,7 +987,7 @@ as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$A16B), margin = 2)) %
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
 
 #Grafico de porcentaje de personas satisfechas con su trabajo por el titulo obtenido
-as.data.frame(prop.table(table(datos_jc$InsLab, datos_jc$A16B), margin = 2)) %>% 
+as.data.frame(prop.table(table(ENAHO$InsLab, ENAHO$A16B), margin = 2)) %>% 
   rename(Satisfaccion = Var1) %>% 
   filter(Var2 != "Satisfacción ignorada") %>% 
   rename(titulo = Var2) %>% 
@@ -989,7 +1004,7 @@ as.data.frame(prop.table(table(datos_jc$InsLab, datos_jc$A16B), margin = 2)) %>%
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20))
 
 #Grafico: distribucion del itpn por título obtenido (version ultra mejorada)
-datos_jc %>% 
+ENAHO %>% 
   filter(A16B != "Ignorado" & itpn > 0) %>%
   ggplot(aes(x = itpn, y = fct_reorder(A16B, itpn, median), fill = A16B)) +
   # Mejorar la visualización con densidades y lineas más detalladas
@@ -1020,7 +1035,7 @@ datos_jc %>%
     panel.grid.minor = element_blank()
   )
 
-datos_jc %>% 
+ENAHO %>% 
   filter(A16B != "Ignorado" & itpn > 0) %>%
   ggplot(aes(x = itpn, y = fct_reorder(A16B, itpn, median), fill = A16B)) +
   # Boxplot con ajuste de grosor y transparencia
@@ -1053,7 +1068,7 @@ datos_jc %>%
   )
 
 #Grafico evolucion de la distribucion de los títulos obtenidos por quintil de ingreso 
-as.data.frame(prop.table(table(datos_jc$A16B,datos_jc$Q_IPCN), margin = 2)) %>% 
+as.data.frame(prop.table(table(ENAHO$A16B,ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
   mutate(Var2 = parse_number(Var2)) %>% 
@@ -1075,7 +1090,7 @@ as.data.frame(prop.table(table(datos_jc$A16B,datos_jc$Q_IPCN), margin = 2)) %>%
 #####################################################
 
 #Grafico evolucion de la distribucion de las personas que dominan un segundo idioma por quintil de ingreso 
-as.data.frame(prop.table(table(datos_jc$A22A,datos_jc$Q_IPCN), margin = 2)) %>% 
+as.data.frame(prop.table(table(ENAHO$A22A,ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
   mutate(Var2 = parse_number(Var2)) %>% 
@@ -1093,7 +1108,7 @@ as.data.frame(prop.table(table(datos_jc$A22A,datos_jc$Q_IPCN), margin = 2)) %>%
         axis.text.x = element_text(hjust = 1))
 
 #Grafico: distribucion del itpn segun dominio de segundo idioma (version ultra mejorada)
-datos_jc %>% 
+ENAHO %>% 
   filter(A22A != "Ignorado" & itpn > 0) %>%
   ggplot(aes(x = itpn, y = fct_reorder(A22A, itpn, median), fill = A22A)) +
   # Mejorar la visualización con densidades y lineas más detalladas

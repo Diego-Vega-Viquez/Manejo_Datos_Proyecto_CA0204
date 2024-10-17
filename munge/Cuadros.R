@@ -1,5 +1,5 @@
 #Cuadros primaria, secundaria o estudios postsecundarios y pobreza
-cuadro_primaria_completa <- datos_jc %>% 
+cuadro_primaria_completa <- ENAHO %>% 
   filter(!is.na(np)) %>%
   group_by(Tiene_prim_completa, np) %>% 
   summarise(conteo = n(), 
@@ -7,7 +7,7 @@ cuadro_primaria_completa <- datos_jc %>%
   group_by(Tiene_prim_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
   mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
-cuadro_secundaria_completa <- datos_jc %>% 
+cuadro_secundaria_completa <- ENAHO %>% 
   filter(!is.na(np)) %>%
   group_by(Tiene_sec_completa, np) %>% 
   summarise(conteo = n(), 
@@ -15,7 +15,7 @@ cuadro_secundaria_completa <- datos_jc %>%
   group_by(Tiene_sec_completa) %>%  # Agrupar por Tiene_prim_completa para calcular el porcentaje correcto
   mutate(porcentaje = (conteo / sum(conteo)) * 100)  # Actualizar el porcentaje
 
-cuadro_estudios_postsecundarios <- datos_jc %>% 
+cuadro_estudios_postsecundarios <- ENAHO %>% 
   filter(!is.na(np)) %>%
   group_by(Tiene_est_postsec, np) %>% 
   summarise(conteo = n(), 
@@ -26,7 +26,7 @@ cuadro_estudios_postsecundarios <- datos_jc %>%
 
 #Cuadro pobreza segun nivel de instrucción
 
-datos_jc %>%
+ENAHO %>%
   filter(!is.na(np) & NivInst != "Ignorado") %>% 
   group_by(NivInst, np) %>% 
   summarise(conteo = n()) %>% #view()
@@ -34,7 +34,7 @@ datos_jc %>%
 
 #Cuadro porcentaje de pobreza multidimensional segun nivel de instrucción
 
-datos_jc %>%
+ENAHO %>%
   filter(!is.na(IPM_Pobreza) & NivInst != "Ignorado") %>% 
   group_by(NivInst, IPM_Pobreza) %>% 
   summarise(conteo = n(), .groups = 'drop') %>%  # Contar el número de personas por grupo
@@ -45,14 +45,14 @@ datos_jc %>%
 
 #Cuadro ingreso segun nivel de instruccion: media y desviación estándar y cuartiles
 
-datos_jc %>% 
+ENAHO %>% 
   filter(itpn > 0 & NivInst != "Ignorado") %>% 
   group_by(NivInst) %>% 
   summarise(min = min(itpn), Q1 = quantile(itpn, 0.25), med = median(itpn), Q3 = quantile(itpn, 0.75), max = max(itpn), ingreso_promedio = mean(itpn), desv_est = sd(itpn)) %>% view()
 
 #cuadro pobreza e ingreso segun universidad publica a la que asistió
 
-datos_jc %>% 
+ENAHO %>% 
   filter(!is.na(A15B) & A15B != "Ignorado" & !is.na(np)) %>% 
   group_by(A15B, np) %>% 
   summarise(conteo = n(), .groups = 'drop') %>% 
@@ -72,14 +72,14 @@ datos_jc %>%
   
   #Tabla: nivel de pobreza segun tipo de centro educativo al que se asistio (porcentajes)
 
-tab_np_vs_tipo_colegio <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A15A), margin = 2))
+tab_np_vs_tipo_colegio <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15A), margin = 2))
 tab_np_vs_tipo_colegio <- tab_np_vs_tipo_colegio %>% mutate(Freq = round(Freq * 100,2)) %>% rename(Nivel_de_pobreza = Var1) %>% filter(Var2 != "Ignorado")
 tab_np_vs_tipo_colegio <- tab_np_vs_tipo_colegio %>% pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_np_vs_tipo_colegio)
 
 #Tabla: distribucion del ingreso segun tipo de centro educativo al que se asistió
 
-tab_dist_itpn_tipo_colegio <- datos_jc %>% 
+tab_dist_itpn_tipo_colegio <- ENAHO %>% 
   filter(A15A != "Ignorado") %>% 
   group_by(A15A) %>%
   summarize(
@@ -95,7 +95,7 @@ tab_dist_itpn_tipo_colegio <- datos_jc %>%
 view(tab_dist_itpn_tipo_colegio)
 
 #Tabla de evolucion de la distribucion del tipo de centro educativo por quintil de ingreso per capita neto
-tab_evol_tipo_colegio_QIPCN <- as.data.frame(prop.table(table(datos_jc$A15A, datos_jc$Q_IPCN), margin = 2)) %>% 
+tab_evol_tipo_colegio_QIPCN <- as.data.frame(prop.table(table(ENAHO$A15A, ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_evol_tipo_colegio_QIPCN)
@@ -106,7 +106,7 @@ view(tab_evol_tipo_colegio_QIPCN)
 
 #Tabla: nivel de pobreza segun universidad pública a la que se asistió (porcentajes)
 
-tab_np_vs_univ <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A15B), margin = 2)) %>% 
+tab_np_vs_univ <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15B), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
@@ -115,7 +115,7 @@ view(tab_np_vs_univ)
 
 #Tabla: distribucion del ingreso segun tipo de centro educativo al que se asistió
 
-tab_dist_itpn_univ <- datos_jc %>% 
+tab_dist_itpn_univ <- ENAHO %>% 
   filter(A15B != "Ignorado") %>% 
   mutate(A15B = fct_reorder(A15B, itpn, median, .desc = TRUE)) %>% 
   group_by(A15B) %>%
@@ -136,7 +136,7 @@ view(tab_dist_itpn_univ)
 ##############################################
 
 #Tabla: nivel de pobreza segun nivel de instruccion 
-tab_np_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$NivInst), margin = 2)) %>% 
+tab_np_vs_nivinst <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$NivInst), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
@@ -144,7 +144,7 @@ tab_np_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$NivIns
 view(tab_np_vs_nivinst)
 
 #Tabla: estabilidad laboral segun nivel de instruccion 
-tab_estabili_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$NivInst), margin = 2)) %>% 
+tab_estabili_vs_nivinst <- as.data.frame(prop.table(table(ENAHO$Estabili, ENAHO$NivInst), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Estabilidad_laboral = Var1) %>% 
   filter(Var2 != "Ignorado", Estabilidad_laboral != "Estabilidad Ignorada") %>% 
@@ -152,7 +152,7 @@ tab_estabili_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$Estabili, dat
 view(tab_estabili_vs_nivinst)
 
 #Tabla: satisfaccion laboral segun nivel de instruccion 
-tab_satisf_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$InsLab, datos_jc$NivInst), margin = 2)) %>% 
+tab_satisf_vs_nivinst <- as.data.frame(prop.table(table(ENAHO$InsLab, ENAHO$NivInst), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Satisfaccion_laboral = Var1) %>% 
   filter(Var2 != "Ignorado", Satisfaccion_laboral != "Satisfacción ignorada") %>% 
@@ -160,7 +160,7 @@ tab_satisf_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$InsLab, datos_j
 view(tab_satisf_vs_nivinst)
 
 #Tabla: distribucion del ingreso por nivel de instruccion
-tab_dist_itpn_nivinst <- datos_jc %>% 
+tab_dist_itpn_nivinst <- ENAHO %>% 
   filter(NivInst != "Ignorado") %>% 
   mutate(NivInst = fct_collapse(NivInst,
                                 "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
@@ -180,11 +180,11 @@ tab_dist_itpn_nivinst <- datos_jc %>%
 view(tab_dist_itpn_nivinst)
 
 #Tabla de evolucion de la distribucion del nivl de instruccion por quintil de ingreso per capita neto
-tab_evol_nivinst_QIPCN <- as.data.frame(prop.table(table(fct_collapse(datos_jc$NivInst, 
+tab_evol_nivinst_QIPCN <- as.data.frame(prop.table(table(fct_collapse(ENAHO$NivInst, 
                                                                       "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                                                       "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
                                                                       "Sin o poco nivel de instrucción" = c("Sin nivel de instrucción", "Primaria incompleta")), 
-                                                         datos_jc$Q_IPCN), margin = 2)) %>% 
+                                                         ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_evol_nivinst_QIPCN)
@@ -194,7 +194,7 @@ view(tab_evol_nivinst_QIPCN)
 #########################################
 
 #Tabla: nivel de pobreza segun titulo obtenido
-tab_np_vs_titulo <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A16B), margin = 2)) %>% 
+tab_np_vs_titulo <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$A16B), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
@@ -202,7 +202,7 @@ tab_np_vs_titulo <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A16B), 
 view(tab_np_vs_titulo)
 
 #Tabla: estabilidad laboral segun titulo obtenido
-tab_estabili_vs_titulo <- as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$A16B), margin = 2)) %>% 
+tab_estabili_vs_titulo <- as.data.frame(prop.table(table(ENAHO$Estabili, ENAHO$A16B), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Estabilidad_laboral = Var1) %>% 
   filter(Var2 != "Ignorado", Estabilidad_laboral != "Estabilidad Ignorada") %>% 
@@ -210,7 +210,7 @@ tab_estabili_vs_titulo <- as.data.frame(prop.table(table(datos_jc$Estabili, dato
 view(tab_estabili_vs_titulo)
 
 #Tabla: satisfaccion laboral segun titulo obtenido
-tab_satisf_vs_titulo <- as.data.frame(prop.table(table(datos_jc$InsLab, datos_jc$A16B), margin = 2)) %>% 
+tab_satisf_vs_titulo <- as.data.frame(prop.table(table(ENAHO$InsLab, ENAHO$A16B), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Satisfaccion_laboral = Var1) %>% 
   filter(Var2 != "Ignorado", Satisfaccion_laboral != "Satisfacción ignorada") %>% 
@@ -218,7 +218,7 @@ tab_satisf_vs_titulo <- as.data.frame(prop.table(table(datos_jc$InsLab, datos_jc
 view(tab_satisf_vs_titulo)
 
 #Tabla: distribucion del ingreso segun titulo obtenido
-tab_dist_itpn_titulo <- datos_jc %>% 
+tab_dist_itpn_titulo <- ENAHO %>% 
   filter(A16B != "Ignorado") %>% 
   group_by(A16B) %>%
   summarize(
@@ -234,7 +234,7 @@ tab_dist_itpn_titulo <- datos_jc %>%
 view(tab_dist_itpn_titulo)
 
 #Tabla de evolucion de la distribucion de los titulos obtenidos por quintil de ingreso per capita neto
-tab_evol_titulo_QIPCN <- as.data.frame(prop.table(table(datos_jc$A16B,datos_jc$Q_IPCN), margin = 2)) %>% 
+tab_evol_titulo_QIPCN <- as.data.frame(prop.table(table(ENAHO$A16B,ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_evol_titulo_QIPCN)
@@ -244,7 +244,7 @@ view(tab_evol_titulo_QIPCN)
 ################################################
 
 #Tabla: estabilidad laboral segun nivel de instruccion 
-tab_estabili_vs_dom_2_idiom <- as.data.frame(prop.table(table(datos_jc$Estabili, datos_jc$A22A), margin = 2)) %>% 
+tab_estabili_vs_dom_2_idiom <- as.data.frame(prop.table(table(ENAHO$Estabili, ENAHO$A22A), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Estabilidad_laboral = Var1) %>% 
   filter(Var2 != "Ignorado", Estabilidad_laboral != "Estabilidad Ignorada") %>% 
@@ -252,7 +252,7 @@ tab_estabili_vs_dom_2_idiom <- as.data.frame(prop.table(table(datos_jc$Estabili,
 view(tab_estabili_vs_dom_2_idiom)
 
 #Tabla: nivel de pobreza segun nivel de instruccion 
-tab_np_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A22A), margin = 2)) %>% 
+tab_np_vs_nivinst <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$A22A), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
@@ -260,7 +260,7 @@ tab_np_vs_nivinst <- as.data.frame(prop.table(table(datos_jc$np, datos_jc$A22A),
 view(tab_np_vs_nivinst)
 
 #Tabla: distribucion del ingreso segun titulo obtenido
-tab_dist_itpn_dom_2_idiom <- datos_jc %>% 
+tab_dist_itpn_dom_2_idiom <- ENAHO %>% 
   filter(A22A != "Ignorado") %>% 
   group_by(A22A) %>%
   summarize(

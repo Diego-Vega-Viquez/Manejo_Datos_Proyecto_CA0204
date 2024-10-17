@@ -9,6 +9,13 @@ library(cherryblossom)
 library(usdata)
 library(openintro)
 library(haven) 
+library(scales)
+library(ggridges) # Para usar geom_density_ridges
+library(sf) 
+library(RColorBrewer)
+library(see)
+library(GGally)
+library(kableExtra)
 
 #Codigo para la lectura de la base de datos
 ENAHO <- read_sav("data/GPES-ELAB-GEBD-ENAHO-2023_BdBasePublica.sav")
@@ -45,7 +52,8 @@ ENAHO <- ENAHO %>% select(REGION, ZONA,
                           Estabili, InsLab,
                           itpn, lp, 
                           np, IPM_Pobreza,
-                          IPM_Intensidad, Q_IPCN) %>% 
+                          IPM_Intensidad, Q_IPCN,
+                          ipcn) %>% 
   filter(A5 >= 18 & A5 <= 60) #filtrar personas entre 18 y 60 años
                                           
 
