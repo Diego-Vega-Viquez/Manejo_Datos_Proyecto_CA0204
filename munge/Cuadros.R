@@ -71,10 +71,11 @@ ENAHO %>%
   #####################################################
   
   #Tabla: nivel de pobreza segun tipo de centro educativo al que se asistio (porcentajes)
-
-tab_np_vs_tipo_colegio <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15A), margin = 2))
-tab_np_vs_tipo_colegio <- tab_np_vs_tipo_colegio %>% mutate(Freq = round(Freq * 100,2)) %>% rename(Nivel_de_pobreza = Var1) %>% filter(Var2 != "Ignorado")
-tab_np_vs_tipo_colegio <- tab_np_vs_tipo_colegio %>% pivot_wider(names_from = Var2, values_from = Freq)
+  
+tab_np_vs_tipo_colegio <- as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15A), margin = 2)) %>% 
+    mutate(Freq = round(Freq * 100,2)) %>% 
+    rename(Nivel_de_pobreza = Var1) %>% 
+    filter(Var2 != "Ignorado") %>% pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_np_vs_tipo_colegio)
 
 #Tabla: distribucion del ingreso segun tipo de centro educativo al que se asistió

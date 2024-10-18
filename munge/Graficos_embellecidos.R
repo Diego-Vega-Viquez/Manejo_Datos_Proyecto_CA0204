@@ -150,7 +150,11 @@ as.data.frame(prop.table(table(ENAHO$A15A, ENAHO$Q_IPCN), margin = 2)) %>%
 ###############################################
 
 #Grafico de nivel de pobreza segun la universidad publica a la que se asistio
-tab_np_vs_univ %>% 
+as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15B), margin = 2)) %>% 
+  mutate(Freq = round(Freq * 100, 2)) %>% 
+  rename(Nivel_de_pobreza = Var1) %>% 
+  filter(Var2 != "Ignorado") %>% 
+  pivot_wider(names_from = Var2, values_from = Freq) %>% 
   pivot_longer(cols = UCR:UTN,
                names_to = "Universidad",
                values_to = "Proporcion") %>% 

@@ -39,7 +39,7 @@ variables_comunes <- datos_con_tipo_de_varibles %>% select(all_of(columnas_comun
 #   TABLA 1   #
 ###############
 
-tabla1 <- variables_comunes %>% filter(!is.na(A15B) & A15B != 'Ignorado') %>% select(A15B,np)
+tabla1 <- variables_utiles %>% filter(!is.na(A15B) & A15B != 'Ignorado') %>% select(A15B,np)
 tabla1 <- tabla1 %>%
   count(A15B, np) %>%
   pivot_wider(names_from = np, 
@@ -61,7 +61,7 @@ tabla1 <- tabla1 %>% rename(Universidad = A15B)
 #   TABLA 2   #
 ###############
 
-tabla2 <- variables_comunes %>% filter(!is.na(Q_IPCN) & !is.na(A22A)) %>% select(Q_IPCN,A22A)
+tabla2 <- variables_utiles %>% filter(!is.na(Q_IPCN) & !is.na(A22A)) %>% select(Q_IPCN,A22A)
 tabla2 <- tabla2 %>%
   count(Q_IPCN, A22A) %>%
   pivot_wider(names_from = A22A, 
