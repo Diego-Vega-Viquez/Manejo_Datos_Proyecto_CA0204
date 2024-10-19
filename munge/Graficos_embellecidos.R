@@ -654,7 +654,7 @@ ENAHO %>%
   geom_density_ridges(rel_min_height = 0.01, scale = 1.2, alpha = 0.8, color = "white") + 
   # Etiquetas y títulos mejorados
   labs(
-    title = "Grafico 19.\nDistribución del ingreso total neto por persona según título obtenido",
+    title = "Grafico 19.1.\nDistribución del ingreso total neto por persona según título obtenido",
     subtitle = "Costa Rica, 2023",
     x = "Ingreso Personal Neto (₡, log10)",
     y = "Título obtenido",
@@ -684,7 +684,7 @@ ENAHO %>%
   # Boxplot con ajuste de grosor y transparencia
   geom_boxplot(outlier.size = 1.5, outlier.shape = 21, outlier.fill = "white", alpha = 0.8) +
   # Títulos mejorados con mayor tamaño y alineación
-  labs(title = "Gráfico 20.\nDistribución del ingreso total neto por persona según título obtenido",
+  labs(title = "Gráfico 19.2.\nDistribución del ingreso total neto por persona según título obtenido",
        subtitle = "Relación entre ingreso total neto y el tipo de título académico alcanzado",
        x = "Ingreso Personal Neto (₡, log10)",
        y = "Tipo de título académico",
@@ -720,7 +720,7 @@ as.data.frame(prop.table(table(ENAHO$A16B, ENAHO$Q_IPCN), margin = 2)) %>%
   mutate(Var2 = parse_number(Var2)) %>% 
   ggplot(aes(x = Var2, y = Freq, fill = fct_reorder(Var1, Freq, median))) +
   geom_area(alpha = 0.8) +  # Transparencia para el área
-  labs(title = "Gráfico 21. \nDistribución de títulos obtenidos por quintil de ingreso per cápita Costa Rica, 2023",
+  labs(title = "Gráfico 20. \nDistribución de títulos obtenidos por quintil de ingreso per cápita Costa Rica, 2023",
        x = "Quintil de ingreso per cápita",
        y = NULL,
        fill = "Título",
@@ -745,6 +745,35 @@ as.data.frame(prop.table(table(ENAHO$A16B, ENAHO$Q_IPCN), margin = 2)) %>%
 #####################################################
 #Gráficos relacionados con dominio de segundo idioma#
 #####################################################
+as.data.frame(table(ENAHO$np, ENAHO$A22A)) %>% 
+  filter(Var2 != "Ignorado") %>% 
+  ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
+  geom_col(position = "fill", alpha = 0.8, color = "white", size = 0.3) +  # Gráfico de área
+  labs(
+    title = "Gráfico 21.\nNivel de pobreza según dominio de un segundo idioma",
+    subtitle = "Relación entre el dominio de un segundo idioma y nivel de pobreza (Costa Rica, 2023)",
+    x = "Dominio de un segundo idioma",
+    y = "Proporción acumulada",
+    fill = "Nivel de pobreza",
+    caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales."
+  ) +
+  scale_fill_viridis_d(option = "D") +  # Paleta de colores viridis
+  coord_flip() +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "right",  # Mover la leyenda arriba
+    legend.title = element_text(size = 10, face = "bold"),
+    legend.text = element_text(size = 8),
+    plot.title = element_text(size = 16, face = "bold", hjust = 0, margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 12, hjust = 0, margin = margin(b = 20)),
+    axis.title.y = element_text(size = 12, margin = margin(t = 10)),
+    axis.text.y = element_text(size = 10, color = "gray20", face = "bold"),
+    axis.text.x = element_text(size = 10, color = "gray20"),
+    plot.caption = element_text(size = 8, hjust = 0),
+    panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
+    panel.grid.minor = element_blank()
+  )
+
 
 #Grafico evolucion de la distribucion de las personas que dominan un segundo idioma por quintil de ingreso 
 as.data.frame(prop.table(table(ENAHO$A22A, ENAHO$Q_IPCN), margin = 2)) %>% 
