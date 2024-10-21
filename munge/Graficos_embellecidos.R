@@ -22,7 +22,9 @@ library(kableExtra)
 #Gráficos relacionados con el tipo de centro educativo#
 #######################################################
 
-#Grafico de nivel de pobreza segun tipo de centro educativo al que asistio
+#####
+# 1 -- Grafico de nivel de pobreza segun tipo de centro educativo al que asistio
+#####
 as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>% 
   filter(Var2 != "Ignorado") %>% 
   ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
@@ -52,7 +54,18 @@ as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>%
     panel.grid.minor = element_blank()
   )
 
-#Graficos de distribucion del itpn segun centro educativo al que se asistio
+ggsave("../Manejo_de_Datos/graphs/Grafico1.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 2 -- Graficos de distribucion del itpn segun centro educativo al que se asistio
+#####
+#####
+# 2.1 -- 
+#####
 ENAHO %>% 
   filter(A15A != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15A, itpn, median), fill = A15A)) +
@@ -78,7 +91,15 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
+ggsave("../Manejo_de_Datos/graphs/Grafico2.1.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 2.2 --
+#####
 ENAHO %>% 
   filter(A15A != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15A, itpn, median), fill = A15A)) +
@@ -104,8 +125,15 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-#Grafico de evolucion de la distribucion del tipo de centro educativo al que se asistio segun quintil de ingreso per capita neto (version ultra wow)
+ggsave("../Manejo_de_Datos/graphs/Grafico2.2.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 3 -- Grafico de evolucion de la distribucion del tipo de centro educativo al que se asistio segun quintil de ingreso per capita neto (version ultra wow)
+#####
 as.data.frame(prop.table(table(ENAHO$A15A, ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
@@ -144,12 +172,18 @@ as.data.frame(prop.table(table(ENAHO$A15A, ENAHO$Q_IPCN), margin = 2)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
+ggsave("../Manejo_de_Datos/graphs/Grafico3.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 ###############################################
 #Gráficos relacionados con universidad pública#
 ###############################################
-
-#Grafico de nivel de pobreza segun la universidad publica a la que se asistio
+#####
+# 4 -- Grafico de nivel de pobreza segun la universidad publica a la que se asistio
+#####
 as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15B), margin = 2)) %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
@@ -181,9 +215,15 @@ as.data.frame(prop.table(table(ENAHO$np, ENAHO$A15B), margin = 2)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
-#Grafico de la cantidad de personas pobres que fueron a una universidad publica, por universidad segun su formacion educativa formal
+ggsave("../Manejo_de_Datos/graphs/Grafico4.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 5 -- Grafico de la cantidad de personas pobres que fueron a una universidad publica, por universidad segun su formacion educativa formal
+#####
 ENAHO %>% 
   filter(!is.na(A15B) & !is.na(ForReg) & np != "No pobre" & A15B != "Ignorado") %>% 
   ggplot(aes(x = fct_infreq(A15B), fill = fct_infreq(ForReg))) +
@@ -210,8 +250,15 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-#Grafico de la proporcion de personas no pobres que fueron a universidad publica, por universidad segun formacion educativa formal
+ggsave("../Manejo_de_Datos/graphs/Grafico5.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 6 -- Grafico de la proporcion de personas no pobres que fueron a universidad publica, por universidad segun formacion educativa formal
+#####
 ENAHO %>% 
   filter(!is.na(A15B) & !is.na(ForReg) & np == "No pobre" & A15B != "Ignorado" & ForReg != "Ignorada" & ForReg != "No definida") %>% 
   ggplot(aes(x = fct_infreq(A15B), fill = fct_infreq(ForReg))) +
@@ -235,8 +282,18 @@ ENAHO %>%
     axis.title.y = element_text(size = 12, margin = margin(r = 10)),  # Mejora en el título del eje Y
     axis.title.x = element_text(size = 12, margin = margin(t = 10))  # Mejora en el título del eje X
   )
-
-#Graficos de distribucion del itpn segun universidad publica a la que se asistio
+ggsave("../Manejo_de_Datos/graphs/Grafico6.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 7 -- Graficos de distribucion del itpn segun universidad publica a la que se asistio
+#####
+#####
+# 7.1 --
+#####
 ENAHO %>% 
   filter(A15B != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15B, itpn, median), fill = A15B)) +
@@ -262,7 +319,15 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
+ggsave("../Manejo_de_Datos/graphs/Grafico7.1.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 7.2 --
+#####
 ENAHO %>% 
   filter(A15B != "Ignorado" & itpn > 0) %>% 
   ggplot(aes(x = itpn, y = fct_reorder(A15B, itpn, median), fill = A15B)) +
@@ -288,14 +353,18 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()  # Se eliminan las cuadrículas menores
   )
-
-
+ggsave("../Manejo_de_Datos/graphs/Grafico7.2.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 ################################################
 #Gráficos relacionados con nivel de instruccion#
 ################################################
-
-#Grafico de evolucion de nivel de pobreza segun nivel de instruccion
-
+#####
+# 8 -- Grafico de evolucion de nivel de pobreza segun nivel de instruccion
+#####
 as.data.frame(table(ENAHO$np, fct_collapse(ENAHO$NivInst, 
                                            "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                            "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
@@ -329,9 +398,15 @@ as.data.frame(table(ENAHO$np, fct_collapse(ENAHO$NivInst,
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
-#Grafico de la evolucion de la estabilidad laboral segun nivel de instruccion
+ggsave("../Manejo_de_Datos/graphs/Grafico8.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 9 -- Grafico de la evolucion de la estabilidad laboral segun nivel de instruccion
+#####
 as.data.frame(prop.table(table(ENAHO$Estabili, fct_collapse(ENAHO$NivInst, 
                                                             "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                                             "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
@@ -361,8 +436,15 @@ as.data.frame(prop.table(table(ENAHO$Estabili, fct_collapse(ENAHO$NivInst,
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-#Grafico de porcentaje de personas satisfechas con su trabajo por nivel de instruccion
+ggsave("../Manejo_de_Datos/graphs/Grafico9.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 10 -- Grafico de porcentaje de personas satisfechas con su trabajo por nivel de instruccion
+#####
 as.data.frame(prop.table(table(ENAHO$InsLab, fct_collapse(ENAHO$NivInst, 
                                                           "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                                           "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
@@ -392,8 +474,15 @@ as.data.frame(prop.table(table(ENAHO$InsLab, fct_collapse(ENAHO$NivInst,
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-#Grafico: distribucion del itpn por nivel de instruccion (version ultra mejorada)
+ggsave("../Manejo_de_Datos/graphs/Grafico10.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 11 -- Grafico: distribucion del itpn por nivel de instruccion (version ultra mejorada)
+#####
 ENAHO %>% 
   filter(NivInst != "Ignorado" & itpn > 0) %>%
   mutate(NivInst = fct_collapse(NivInst,
@@ -405,7 +494,7 @@ ENAHO %>%
   geom_density_ridges(rel_min_height = 0.01, scale = 1.2, alpha = 0.8, color = "white") + 
   # Etiquetas y títulos mejorados
   labs(
-    title = "Grafico 11.\nDistribución del ingreso total neto por persona según nivel de instrucción",
+    title = "Grafico 11.\nDistribución del ingreso total neto por persona \nsegún nivel de instrucción",
     subtitle = "Costa Rica, 2023",
     x = "Ingreso Personal Neto (₡, log10)",
     y = "Nivel de instrucción",
@@ -428,8 +517,15 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-#Grafico evolucion de la distribucion del nivel de instruccion por quintil de ingreso 
+ggsave("../Manejo_de_Datos/graphs/Grafico11.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 12 -- Grafico evolucion de la distribucion del nivel de instruccion por quintil de ingreso 
+#####
 as.data.frame(prop.table(table(fct_collapse(ENAHO$NivInst, 
                                             "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                             "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
@@ -463,14 +559,18 @@ as.data.frame(prop.table(table(fct_collapse(ENAHO$NivInst,
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
+ggsave("../Manejo_de_Datos/graphs/Grafico12.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 #######################################
 #Gráficos relacionados con escolaridad#
 #######################################
-
-#Grafico correlacion entre años de escolaridad e ingreso total por persona neto
-
+#####
+# 13 -- Grafico correlacion entre años de escolaridad e ingreso total por persona neto
+#####
 ENAHO %>% 
   ggplot(aes(x = Escolari, y = itpn, color = ZONA)) +
   # Cambiar a puntos con transparencia para evitar solapamientos y tamaño adecuado
@@ -505,9 +605,15 @@ ENAHO %>%
     legend.text = element_text(size = 9),
     plot.caption = element_text(size = 7, hjust = 0)
   )
-
-#Grafico correlacion entre años de escolaridad e intensidad de la pobreza multidimensional
-
+ggsave("../Manejo_de_Datos/graphs/Grafico13.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 14 -- Grafico correlacion entre años de escolaridad e intensidad de la pobreza multidimensional
+#####
 ENAHO %>% 
   ggplot(aes(x = Escolari, y = IPM_Intensidad, color = ZONA)) +
   # Cambiar a puntos con transparencia para evitar solapamientos y tamaño adecuado
@@ -541,7 +647,15 @@ ENAHO %>%
     legend.text = element_text(size = 9),
     plot.caption = element_text(size = 7, hjust = 0)
   )
-
+ggsave("../Manejo_de_Datos/graphs/Grafico14.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 15 -- 
+#####
 ENAHO %>% filter(!is.na(Q_IPCN)) %>% 
   ggplot(aes(x = Escolari, 
              y = itpn, 
@@ -572,14 +686,18 @@ ENAHO %>% filter(!is.na(Q_IPCN)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
+ggsave("../Manejo_de_Datos/graphs/Grafico15.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 ###########################################
 #Gráficos relacionados con título obtenido#
 ###########################################
-
-#Grafico de evolucion de nivel de pobreza segun titulo
-
+#####
+# 16 -- Grafico de evolucion de nivel de pobreza segun titulo
+#####
 as.data.frame(table(ENAHO$np, ENAHO$A16B)) %>% 
   rename(Nivel_de_pobreza = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
@@ -608,9 +726,15 @@ as.data.frame(table(ENAHO$np, ENAHO$A16B)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
-#Grafico de la evolucion de la estabilidad laboral segun titulo obtenido
+ggsave("../Manejo_de_Datos/graphs/Grafico16.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 17 -- Grafico de la evolucion de la estabilidad laboral segun titulo obtenido
+#####
 as.data.frame(prop.table(table(ENAHO$Estabili, ENAHO$A16B), margin = 2)) %>% 
   rename(Estabilidad = Var1) %>% 
   filter(Var2 != "Ignorado") %>% 
@@ -627,8 +751,15 @@ as.data.frame(prop.table(table(ENAHO$Estabili, ENAHO$A16B), margin = 2)) %>%
   cowplot::theme_cowplot() +
   theme(plot.caption = element_text(size = 6, hjust = 0),
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20, face = "bold", color = "gray20"))
-
-#Grafico de porcentaje de personas satisfechas con su trabajo por el titulo obtenido
+ggsave("../Manejo_de_Datos/graphs/Grafico17.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 18 -- Grafico de porcentaje de personas satisfechas con su trabajo por el titulo obtenido
+#####
 as.data.frame(prop.table(table(ENAHO$InsLab, ENAHO$A16B), margin = 2)) %>% 
   rename(Satisfaccion = Var1) %>% 
   filter(Var2 != "Satisfacción ignorada") %>% 
@@ -645,8 +776,15 @@ as.data.frame(prop.table(table(ENAHO$InsLab, ENAHO$A16B), margin = 2)) %>%
   cowplot::theme_cowplot() +
   theme(plot.caption = element_text(size = 6, hjust = 0),
         axis.text.x = element_text(hjust = 0, size = 8, angle = -20, color = "gray20", face = "bold"))
-
-#Grafico: distribucion del itpn por título obtenido (version ultra mejorada)
+ggsave("../Manejo_de_Datos/graphs/Grafico18.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 19.1 -- Grafico: distribucion del itpn por título obtenido (version ultra mejorada)
+#####
 ENAHO %>% 
   filter(A16B != "Ignorado" & itpn > 0) %>%
   ggplot(aes(x = itpn, y = fct_reorder(A16B, itpn, median), fill = A16B)) +
@@ -654,7 +792,7 @@ ENAHO %>%
   geom_density_ridges(rel_min_height = 0.01, scale = 1.2, alpha = 0.8, color = "white") + 
   # Etiquetas y títulos mejorados
   labs(
-    title = "Grafico 19.1.\nDistribución del ingreso total neto por persona según título obtenido",
+    title = "Grafico 19.1.\nDistribución del ingreso total neto por persona \nsegún título obtenido",
     subtitle = "Costa Rica, 2023",
     x = "Ingreso Personal Neto (₡, log10)",
     y = "Título obtenido",
@@ -677,7 +815,15 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
+ggsave("../Manejo_de_Datos/graphs/Grafico19.1.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 19.2 -- 
+#####
 ENAHO %>% 
   filter(A16B != "Ignorado" & itpn > 0) %>%
   ggplot(aes(x = itpn, y = fct_reorder(A16B, itpn, median), fill = A16B)) +
@@ -712,8 +858,9 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-#Grafico evolucion de la distribucion de los títulos obtenidos por quintil de ingreso 
+#####
+# 20 -- Grafico evolucion de la distribucion de los títulos obtenidos por quintil de ingreso
+#####
 as.data.frame(prop.table(table(ENAHO$A16B, ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
@@ -740,11 +887,18 @@ as.data.frame(prop.table(table(ENAHO$A16B, ENAHO$Q_IPCN), margin = 2)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
+ggsave("../Manejo_de_Datos/graphs/Grafico20.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 #####################################################
 #Gráficos relacionados con dominio de segundo idioma#
 #####################################################
+#####
+# 21 -- 
+#####
 as.data.frame(table(ENAHO$np, ENAHO$A22A)) %>% 
   filter(Var2 != "Ignorado") %>% 
   ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
@@ -773,9 +927,15 @@ as.data.frame(table(ENAHO$np, ENAHO$A22A)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
-#Grafico evolucion de la distribucion de las personas que dominan un segundo idioma por quintil de ingreso 
+ggsave("../Manejo_de_Datos/graphs/Grafico21.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 22 -- Grafico evolucion de la distribucion de las personas que dominan un segundo idioma por quintil de ingreso 
+#####
 as.data.frame(prop.table(table(ENAHO$A22A, ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
@@ -801,9 +961,15 @@ as.data.frame(prop.table(table(ENAHO$A22A, ENAHO$Q_IPCN), margin = 2)) %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
-
-#Grafico: distribucion del itpn segun dominio de segundo idioma (version ultra mejorada)
+ggsave("../Manejo_de_Datos/graphs/Grafico22.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
+#####
+# 23 -- Grafico: distribucion del itpn segun dominio de segundo idioma (version ultra mejorada)
+#####
 ENAHO %>% 
   filter(A22A != "Ignorado" & itpn > 0) %>%
   ggplot(aes(x = itpn, y = fct_reorder(A22A, itpn, median), fill = A22A)) +
@@ -834,7 +1000,12 @@ ENAHO %>%
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
   )
-
+ggsave("../Manejo_de_Datos/graphs/Grafico23.png", 
+       plot = last_plot(), 
+       device = "jpg", 
+       width = 11.6, # Tamaño: 11.5 pulgadas de ancho
+       height = 6.5, # Tamaño: 6 pulgadas de alto
+       dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 
 
