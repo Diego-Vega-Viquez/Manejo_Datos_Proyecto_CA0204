@@ -272,15 +272,19 @@ ENAHO %>%
     caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales."
   ) +
   scale_fill_brewer(palette = "Set2") +  # Paleta de colores mejorada
-  cowplot::theme_cowplot() +  # Tema de cowplot
+  theme_minimal(base_size = 14) +  # Tema minimalista
   theme(
     plot.caption = element_text(size = 6, hjust = 0),
+    plot.title = element_text(size = 16, face = "bold", hjust = 0, margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 12, hjust = 0, margin = margin(b = 10)),
     legend.text = element_text(size = 8),
     legend.title = element_text(size = 10, face = "bold", color = "gray20"),
     axis.text.x = element_text(size = 10, face = "bold", color = "gray20"),  # Ajuste del ángulo del texto en el eje X
     axis.text.y = element_text(size = 10),
     axis.title.y = element_text(size = 12, margin = margin(r = 10)),  # Mejora en el título del eje Y
-    axis.title.x = element_text(size = 12, margin = margin(t = 10))  # Mejora en el título del eje X
+    axis.title.x = element_text(size = 12, margin = margin(t = 10)),  # Mejora en el título del eje X
+    panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
+    panel.grid.minor = element_blank()
   )
 ggsave("../Manejo_de_Datos/graphs/Grafico6.png", 
        plot = last_plot(), 

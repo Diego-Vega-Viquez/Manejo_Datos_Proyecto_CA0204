@@ -113,7 +113,7 @@ view(tab_satisf_vs_nivinst)
 
 #Tabla9: distribucion del ingreso por nivel de instruccion
 tab_dist_itpn_nivinst <- ENAHO %>% 
-  filter(NivInst != "Ignorado", itpn > 0) %>% 
+  filter(NivInst != "Ignorado") %>% 
   mutate(NivInst = fct_collapse(NivInst,
                                 "Primaria completa" = c("Primaria completa", "Secundaria académica incompleta", "Secundaria técnica incompleta"),
                                 "Secundaria completa" = c("Secundaria académica completa", "Secundaria técnica completa"),
@@ -177,7 +177,7 @@ view(tab_satisf_vs_titulo)
 
 #Tabla14: distribucion del ingreso segun titulo obtenido
 tab_dist_itpn_titulo <- ENAHO %>% 
-  filter(A16B != "Ignorado", itpn > 0) %>% 
+  filter(A16B != "Ignorado") %>% 
   group_by(A16B) %>%
   summarize(
     n = n(),                      # Conteo de observaciones
@@ -216,14 +216,14 @@ view(tab_np_vs_dom_2_idiom)
 tab_evol_dom_2_idiom_QIPCN <- as.data.frame(prop.table(table(ENAHO$A22A,ENAHO$Q_IPCN), margin = 2)) %>% 
   filter(Var1 != "Ignorado") %>% 
   mutate(Freq = round(Freq * 100, 2)) %>% 
-  rename(Titulo = Var1) %>% 
+  rename(Dominio_segundo_idioma = Var1) %>% 
   mutate(Freq = paste0(Freq, "%")) %>% 
   pivot_wider(names_from = Var2, values_from = Freq)
 view(tab_evol_dom_2_idiom_QIPCN)
 
 #Tabla18: distribucion del ingreso segun dominio segundo idioma
 tab_dist_itpn_dom_2_idiom <- ENAHO %>% 
-  filter(A22A != "Ignorado", itpn > 0) %>% 
+  filter(A22A != "Ignorado") %>% 
   group_by(A22A) %>%
   summarize(
     n = n(),                      # Conteo de observaciones
