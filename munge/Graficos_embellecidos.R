@@ -22,7 +22,7 @@ library(kableExtra)
 #Gráficos relacionados con el tipo de centro educativo#
 #######################################################
 
-#####
+##### LISTO
 # 1 -- Grafico de nivel de pobreza segun tipo de centro educativo al que asistio
 #####
 as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>% 
@@ -30,7 +30,7 @@ as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>%
   ggplot(aes(x = Var2, y = Freq, fill = Var1)) +
   geom_col(position = "fill", alpha = 0.8, color = "white", size = 0.3) +  # Gráfico de área
   labs(
-    title = "Gráfico 1.\nNivel de pobreza según tipo de\ncentro educativo al que se asistió",
+    title = "Gráfico 1.\nNivel de pobreza según tipo de centro educativo al que se asistió",
     subtitle = "Relación entre tipo de centro educativo y nivel de pobreza (Costa Rica, 2023)",
     x = "Tipo de centro educativo al que asistió",
     y = "Proporción acumulada",
@@ -64,7 +64,7 @@ ggsave("../Manejo_de_Datos/graphs/Grafico1.png",
 # 2 -- Graficos de distribucion del itpn segun centro educativo al que se asistio
 #####
 #####
-# 2.1 -- 
+# 2.1 -- Distribución del ingreso total neto por persona según tipo de centro educativo al que se asistió
 #####
 ENAHO %>% 
   filter(A15A != "Ignorado" & itpn > 0) %>% 
@@ -74,8 +74,9 @@ ENAHO %>%
   annotate("text", y = 0.5, x = 180000, label = "Línea de pobreza", color = "red", 
            size = 3, hjust = 0, vjust = -0.5, fontface = "italic") +  # Texto mejorado
   labs(
-    title = "Gráfico 2.1.\nDistribución del ingreso total neto por persona\nsegún tipo de centro educativo al que se asistió",
-    x = "Ingreso Personal Neto (₡, log10)",
+    title = "Gráfico 2.1.\nDistribución del Ingreso Neto Personal por Tipo de Centro Educativo Asistido",
+    subtitle = "Ingreso expresado en colones costarricenses",
+    x = "Ingreso Personal Neto(log10)",
     y = "Tipo de centro educativo",
     caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales."
   ) +
@@ -108,8 +109,9 @@ ENAHO %>%
   annotate("text", y = 2.5, x = 15000, label = "Línea de pobreza", color = "red", 
            size = 3, hjust = 0, vjust = -0.5, fontface = "italic") +  # Texto mejorado
   labs(
-    title = "Gráfico 2.2.\nDistribución del ingreso total neto por persona\nsegún tipo de centro educativo al que se asistió",
-    x = "Ingreso Personal Neto (₡, log10)",
+    title = "Gráfico 2.2.\nDistribución del ingreso total neto por persona según tipo de centro educativo al que se asistió",
+    subtitle = "Ingreso expresado en colones costarricenses",
+    x = "Ingreso Personal Neto (log10)",
     y = "Tipo de centro educativo",
     caption = "Fuente: Instituto Nacional de Estadística y Censos (INEC), Costa Rica. (2023). Encuesta Nacional de Hogares 2023, Julio 2023: Resultados Generales."
   ) +
@@ -121,6 +123,7 @@ ENAHO %>%
     axis.text.y = element_text(size = 10, color = "gray20", face = "bold"),
     axis.text.x = element_text(size = 10, color = "gray20"),  # Ajuste de texto en eje X
     plot.title = element_text(size = 16, face = "bold", hjust = 0, margin = margin(b = 10)),
+    plot.title.position = "plot",
     plot.caption = element_text(size = 8, hjust = 0),
     panel.grid.major = element_line(size = 0.5, linetype = "dashed", color = "gray80"),
     panel.grid.minor = element_blank()
