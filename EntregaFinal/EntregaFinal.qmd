@@ -177,7 +177,7 @@ Al observar los ingresos promedio según la titulación obtenida en la @fig-Graf
 ::: {layout-ncol=2}
 ![Distribución del nivel de instrucción por quintil de ingreso per cápita](graphs/Grafico8.png){#fig-Grafico8 width=100%}
 
-![Distribuci´øn de títulos obtenidos por quitil de ingreso per cápita](graphs/Grafico14.png){#fig-Grafico14 width=100%}
+![Distribución de títulos obtenidos por quitil de ingreso per cápita](graphs/Grafico14.png){#fig-Grafico14 width=100%}
 :::
 
 La @fig-Grafico8 revela que los niveles educativos bajos, como sin instrucción o primaria completa, se concentran en los quintiles de ingresos más bajos. En el primer quintil (₡110,683 o menos), el 52.98% completó solo la primaria y el 18.14% tiene poca o ninguna instrucción. En contraste, en el quinto quintil (más de ₡574,085), el 54.87% completó educación de pregrado y el 11.26% tiene estudios de posgrado. Esto sugiere que el acceso a niveles educativos superiores tiende a ubicarse en los quintiles altos, aunque existen barreras estructurales que limitan la movilidad social, como se ha visto anteriormente.
