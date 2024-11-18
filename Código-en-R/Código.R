@@ -338,6 +338,14 @@ ggsave("EntregaFinal/graphs/Grafico8.png",
        dpi = 900)  # Calidad: 900 pixeles por pulgada
 
 #####################################################
+tabla_porcentajes_titulos <- as.data.frame(prop.table(table(datos_filtrados$A16B, datos_filtrados$Q_IPCN), margin = 2)) %>% 
+  filter(Var1 != "Ignorado", Var1 != "Técnico medio, perito o diplomado no universitario", Var1 != "Profesorado o diplomado universitario") %>% 
+  mutate(Var2 = str_extract(Var2, "\\d")) %>% 
+  mutate(Var2 = parse_number(Var2)) %>% 
+  filter(Var2 == 5) %>% 
+  mutate(Freq_acumulada = cumsum(Freq)) # Agregar columna de frecuencia acumulada
+
+
 datos_filtrados <- ENAHO %>%
   filter(A16B != "Ignorado",
          A16B != "Técnico medio, perito o diplomado no universitario",
@@ -347,13 +355,31 @@ grafico14 <- as.data.frame(prop.table(table(datos_filtrados$A16B, datos_filtrado
   filter(Var1 != "Ignorado", Var1 != "Técnico medio, perito o diplomado no universitario", Var1 != "Profesorado o diplomado universitario") %>% 
   mutate(Var2 = str_extract(Var2, "\\d")) %>% 
   mutate(Var2 = parse_number(Var2)) %>% 
-  ggplot(aes(x = Var2, y = Freq, fill = fct_reorder(Var1, Freq, median))) +
+  ggplot(aes(x = Var2, y = Freq, fill = fct_relevel(Var1, c("Doctorado", "Maestría","Especialización", "Licenciatura", "Bachillerato", "No tiene título")))) +
   geom_area(alpha = 0.8) +  # Transparencia para el área
   labs(
        x = NULL,
        y = NULL,
        fill = "Título"
   ) +
+  annotate("text",
+           x = 4.8,
+           y = 0.08,
+           label = "13,4%",
+           size = 12,
+           color = "white")+
+  annotate("text",
+           x = 4.8,
+           y = 0.3,
+           label = "24,2%",
+           size = 12,
+           color = "white")+
+  annotate("text",
+           x = 4.8,
+           y = 0.38,
+           label = "46,1%",
+           size = 12,
+           color = "white")+
   # Mejora de la paleta de colores con gradientes suaves
   scale_fill_viridis_d(option = "H") +  
   theme_minimal(base_size = 14) +  # Estilo minimalista
@@ -370,6 +396,6 @@ grafico14 <- as.data.frame(prop.table(table(datos_filtrados$A16B, datos_filtrado
 ggsave("EntregaFinal/graphs/Grafico14.png", 
        plot = last_plot(), 
        device = "jpg", 
-       width = 14, # Tamaño: 11.5 pulgadas de ancho
+       width = 18, # Tamaño: 11.5 pulgadas de ancho
        height = 6.5, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
