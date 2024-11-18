@@ -40,7 +40,7 @@ grafico1 <- as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>%
     y = NULL,
     fill = "Nivel de pobreza",
   ) +
-  scale_fill_viridis_d(option = "F") +  # Paleta de colores viridis
+  scale_fill_viridis_d(option = "F", begin = 0, end = 0.85) +  # Paleta de colores viridis
   coord_flip() +
   theme_minimal(base_size = 14) +
   theme(
@@ -82,7 +82,7 @@ grafico6 <- as.data.frame(table(ENAHO$np, fct_collapse(ENAHO$NivInst,
     y = NULL,
     fill = "Nivel de pobreza",
   ) +
-  scale_fill_viridis_d(option = "F") +  # Paleta de colores viridis
+  scale_fill_viridis_d(option = "F", begin = 0, end = 0.85) +  # Paleta de colores viridis
   coord_flip() +
   theme_minimal(base_size = 14) +
   theme(
@@ -119,7 +119,7 @@ grafico12 <- as.data.frame(table(ENAHO$np, ENAHO$A16B)) %>%
   labs(x = NULL,
        y = NULL,
        fill = "Nivel de pobreza") +
-  scale_fill_viridis_d(option = "F") +  # Paleta de colores viridis
+  scale_fill_viridis_d(option = "F", begin = 0, end = 0.85) +  # Paleta de colores viridis
   coord_flip() +
   theme_minimal(base_size = 14) +  # Estilo minimalista
   theme(
