@@ -179,7 +179,7 @@ La @fig-Grafico8 revela que los niveles educativos más bajos, como sin instrucc
 
 ![Distribución de títulos obtenidos por quintil de ingreso per cápita](graphs/Grafico14.png){#fig-Grafico14 width=60%}
 
-Por otro lado, la @fig-Grafico14 resalta que la educación superior facilita la presencia en los quintiles de ingresos más altos. Por ejemplo, el 42.83% de quienes poseen una licenciatura se encuentran en el quinto quintil, y más del 12% de quienes tienen un posgrado también están en este grupo. Esto subraya la importancia de la educación como motor de movilidad social, dado que se ha demostrado que acceder a niveles educativos superiores es esencial para mejorar las oportunidades económicas.
+Por otro lado, la @fig-Grafico14 resalta que la educación superior facilita la presencia en los quintiles de ingresos más altos. Por ejemplo, el 46,07% de quienes poseen una licenciatura se encuentran en el quinto quintil, y más del 15% de quienes tienen un posgrado también están en este grupo. Esto subraya la importancia de la educación como motor de movilidad social, dado que se ha demostrado que acceder a niveles educativos superiores es esencial para mejorar las oportunidades económicas.
 
 # Conclusiones
 
