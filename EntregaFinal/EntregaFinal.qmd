@@ -4,7 +4,7 @@ author:
   - name: "José Carlos Quintero Cedeño"
     email: "jose.quintero@example.com"
   - name: "Diego Alberto Vega Víquez"
-    email: "diego.vega@example.com"
+    email: "diegovv13@gmail.com"
 format: 
   pdf: 
     documentclass: article  
