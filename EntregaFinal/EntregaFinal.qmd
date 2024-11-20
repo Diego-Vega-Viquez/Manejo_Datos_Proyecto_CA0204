@@ -15,7 +15,7 @@ format:
     colorlinks: true                    
     linkcolor: blue   
   docx: 
-    reference-doc:   
+    reference-doc: custom-reference-doc.docx 
 bibliography: references.bib 
 csl: apa.csl  
 lang: es      
