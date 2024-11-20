@@ -1,8 +1,8 @@
 ---
-title: "Relación entre la educación y la condición socioeconómica y la distribución del ingreso en Costa Rica, 2023"
+title: "Relación entre la educación, la condición socioeconómica y la distribución del ingreso en Costa Rica, 2023"
 author: 
   - name: "José Carlos Quintero Cedeño"
-    email: "jose.quintero@example.com"
+    email: "josecarlosquince@gmail.com"
   - name: "Diego Alberto Vega Víquez"
     email: "diegovv13@gmail.com"
 format: 
@@ -13,7 +13,9 @@ format:
     toc: false                          
     number-sections: false               
     colorlinks: true                    
-    linkcolor: blue     
+    linkcolor: blue   
+  docx: 
+    reference-doc:   
 bibliography: references.bib 
 csl: apa.csl  
 lang: es      
@@ -140,8 +142,6 @@ En este caso $Q_2$ corresponde a la mediana de los datos.
 
 # Resultados
 
-**Distribución de la pobreza**
-
 Tras analizar la distribución de la población en condición de pobreza y no pobreza a través de diferentes categorías, se puede hacer la afirmación preliminar de que la educación es un determinante clave de la condición socioeconómica de las personas, ya que influye de manera directa en las probabilidades de que un individuo se encuentre en situación de pobreza.
 
 ![Nivel de pobreza según nivel de instrucción](graphs/Grafico6.png){#fig-Grafico6 width=80%}
@@ -157,7 +157,6 @@ El impacto de la educación primaria y secundaria también se manifiesta al obse
 ![Distribución de pobreza según nivel académico](graphs/Grafico12.png){#fig-Grafico12 width=80%}
 
 La relación entre el nivel de titulación y la situación socioeconómica también es evidente. La @fig-Grafico12 muestra que a medida que aumenta el nivel educativo alcanzado, la probabilidad de encontrarse en pobreza disminuye considerablemente. Mientras que el 86% de las personas sin título no son pobres, el 3.69% está en pobreza extrema y un 10.31% en pobreza no extrema. En cambio, aquellos con títulos universitarios avanzados, como licenciatura, especialización, maestría o doctorado, presentan tasas de pobreza casi inexistentes, estando la mayoría en la categoría de "no pobre".
-**Distribución del ingreso**
 
 ![Distribución del ingreso total neto por persona según nivel de instrucción](graphs/Grafico7.png){#fig-Grafico7 width=80%}
 
@@ -171,7 +170,7 @@ En comparación, los centros públicos tienen una media de ingresos notablemente
 
 ![Distribución del ingreso total neto por persona según título obtenido](graphs/Grafico13.png){#fig-Grafico13 width=80%}
 
-Al analizar los ingresos según la titulación obtenida en la @fig-Grafico13, se evidencia una correlación positiva entre la formación académica y los ingresos. Las personas con títulos avanzados, como especialización, maestría y doctorado, logran los ingresos más altos, superando los 1.4 millones de colones en promedio para los niveles de maestría y doctorado. En particular, quienes completaron una especialización tienen el promedio de ingresos más elevado, cercano a los 1.95 millones. Por el contrario, aquellos sin título o con formación técnica media obtienen ingresos considerablemente menores, con promedios de aproximadamente 444 mil y 527 mil colones, respectivamente. Esta diferencia destaca la importancia de la educación como una vía para acceder a mejores oportunidades económicas, aunque también muestra las dificultades que enfrentan quienes no alcanzan niveles educativos superiores, limitando su acceso a empleos bien remunerados y su movilidad económica.
+Al analizar los ingresos según la titulación obtenida en la @fig-Grafico13, se evidencia una correlación positiva entre la formación académica y los ingresos. Las personas con títulos avanzados, como especialización, maestría y doctorado, logran los ingresos más altos, superando los 1.4 millones de colones en promedio para los niveles de maestría y doctorado. En particular, quienes completaron una especialización tienen el promedio de ingresos más elevado, cercano a los 1.95 millones de colones. Por el contrario, aquellos sin título o con formación técnica media obtienen ingresos considerablemente menores, con promedios de aproximadamente 444 mil y 527 mil colones, respectivamente. Esta diferencia destaca la importancia de la educación como una vía para acceder a mejores oportunidades económicas, aunque también muestra las dificultades que enfrentan quienes no alcanzan niveles educativos superiores, limitando su acceso a empleos bien remunerados y su movilidad económica.
 
 ![Distribución del nivel de instrucción por quintil de ingreso per cápita](graphs/Grafico8.png){#fig-Grafico8 width=60%}
 
@@ -185,7 +184,7 @@ Por otro lado, la @fig-Grafico14 resalta que la educación superior facilita la 
 
 Este trabajo de investigación se propuso explorar la relación entre el nivel educativo y la condición socioeconómica de las personas en Costa Rica, así como su influencia en la distribución de los ingresos. La pregunta central fue: *¿Qué relación existe entre la condición socioeconómica de las personas y su nivel educativo, y cómo pueden estas variables explicar la distribución de los ingresos en Costa Rica?* Esta pregunta se formuló con el objetivo de entender cómo factores como los años de escolaridad, el nivel de instrucción, el tipo de institución educativa, la titulación universitaria, la universidad pública asistida y el dominio de habilidades adicionales (como un segundo idioma) influyen en la pobreza y el ingreso. Se esperaba que la educación emergiera como un factor crucial para determinar las oportunidades económicas de los individuos y para reducir la pobreza. En este sentido, los resultados coincidieron con esta hipótesis: el nivel educativo se mostró como un predictor clave tanto de la condición socioeconómica como de los ingresos. Se encontró que las personas con niveles educativos más altos tienden a concentrarse en los quintiles de mayores ingresos, mientras que aquellas con niveles más bajos suelen ubicarse en los quintiles más bajos, con una mayor incidencia de pobreza.
 
-El estudio enfrenta varios desafíos metodológicos que pueden afectar la precisión de los resultados. La falta de distinción en la calidad y contexto de las variables educativas, así como factores como la duración de estudios y el contexto socioeconómico inicial, puede distorsionar la relación observada entre educación e ingresos. Además, la presencia de valores atípicos y la variabilidad dentro de los niveles educativos analizados sugieren la influencia de factores adicionales, como la industria laboral y la especialización por sectores productivos, que no se consideraron. Estos elementos limitan la generalización de las conclusiones y subrayan la necesidad de un análisis más detallado en futuros estudios.
+El estudio enfrenta varios desafíos metodológicos que pueden afectar la precisión de los resultados. La falta de distinción en la calidad y contexto de los centros educativos, así como factores como la duración de estudios y el contexto socioeconómico inicial, puede distorsionar la relación observada entre educación e ingresos. Además, la presencia de valores atípicos y la variabilidad dentro de los niveles educativos analizados sugieren la influencia de factores adicionales, como la industria laboral y la especialización por sectores productivos, que no se consideraron. Estos elementos limitan la generalización de las conclusiones y subrayan la necesidad de un análisis más detallado en futuros estudios.
 
 Con base en estos hallazgos, se sugiere que futuras investigaciones profundicen en el análisis de variables contextuales, como el tipo de empleo y las industrias predominantes en distintas zonas geográficas, para captar mejor la relación entre educación e ingreso en diferentes sectores económicos. Asimismo, se podría añadir una dimensión temporal en el análisis para ofrecer una perspectiva valiosa, permitiendo observar cómo cambian estas variables a lo largo del tiempo y en distintos contextos económicos. Otra recomendación es explorar el impacto de factores adicionales no abordados en esta investigación, tales como la calidad específica de los programas educativos, la inversión en tecnología educativa y las políticas de desarrollo local.
 
@@ -198,5 +197,11 @@ Los autores desean expresar su más profundo agradecimiento al Profesor Ph.D. Ma
 Asimismo, se extiende un sincero agradecimiento a los compañeros del curso CA0204: Herramientas para Ciencia de Datos I, cuyo apoyo y colaboración fueron de gran utilidad a lo largo de todo el semestre en el que se desarrolló este proyecto.
 
 {{< pagebreak >}}
+
+# Anexos
+
+## Aplicación shiny
+
+<https://3iikau-jose0carlos0quintero0cede0o.shinyapps.io/appHPCD/>
 
 # Bibliografía
