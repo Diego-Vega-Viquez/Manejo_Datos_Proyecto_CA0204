@@ -40,6 +40,7 @@ grafico1 <- as.data.frame(table(ENAHO$np, ENAHO$A15A)) %>%
     y = NULL,
     fill = "Nivel de pobreza",
   ) +
+  scale_y_continuous(labels = scales::percent_format()) +  # Escala de porcentaje en el eje Y
   scale_fill_viridis_d(option = "F", begin = 0, end = 0.85) +  # Paleta de colores viridis
   coord_flip() +
   theme_minimal(base_size = 14) +
@@ -82,6 +83,7 @@ grafico6 <- as.data.frame(table(ENAHO$np, fct_collapse(ENAHO$NivInst,
     y = NULL,
     fill = "Nivel de pobreza",
   ) +
+  scale_y_continuous(labels = scales::percent_format()) +  # Escala de porcentaje en el eje Y
   scale_fill_viridis_d(option = "F", begin = 0, end = 0.85) +  # Paleta de colores viridis
   coord_flip() +
   theme_minimal(base_size = 14) +
@@ -119,6 +121,7 @@ grafico12 <- as.data.frame(table(ENAHO$np, ENAHO$A16B)) %>%
   labs(x = NULL,
        y = NULL,
        fill = "Nivel de pobreza") +
+  scale_y_continuous(labels = scales::percent_format()) +  # Escala de porcentaje en el eje Y
   scale_fill_viridis_d(option = "F", begin = 0, end = 0.85) +  # Paleta de colores viridis
   coord_flip() +
   theme_minimal(base_size = 14) +  # Estilo minimalista
@@ -315,6 +318,25 @@ grafico8 <- as.data.frame(prop.table(table(fct_collapse(ENAHO$NivInst,
     y = NULL, 
     fill = "Nivel\nde instrucción"
   ) +
+  annotate("text",
+           x = 4.8,
+           y = 0.08,
+           label = "13,3%",
+           size = 12,
+           color = "white")+
+  annotate("text",
+           x = 4.8,
+           y = 0.3,
+           label = "19,9%",
+           size = 12,
+           color = "black")+
+  annotate("text",
+           x = 4.8,
+           y = 0.65,
+           label = "54,9%",
+           size = 12,
+           color = "black")+
+  scale_y_continuous(labels = scales::percent_format()) +  # Escala de porcentaje en el eje Y
   scale_fill_viridis_d(option = "H") +  # Paleta de colores viridis
   theme_minimal(base_size = 14) +  # Tema minimalista
   theme(
@@ -363,24 +385,30 @@ grafico14 <- as.data.frame(prop.table(table(datos_filtrados$A16B, datos_filtrado
        fill = "Título"
   ) +
   annotate("text",
-           x = 4.8,
+           x = 4.75,
            y = 0.08,
            label = "13,4%",
-           size = 12,
+           size = 15,
            color = "white")+
   annotate("text",
-           x = 4.8,
+           x = 4.75,
            y = 0.3,
            label = "24,2%",
-           size = 12,
+           size = 15,
            color = "white")+
   annotate("text",
-           x = 4.8,
-           y = 0.38,
+           x = 4.75,
+           y = 0.65,
            label = "46,1%",
-           size = 12,
+           size = 15,
+           color = "black")+
+  annotate("text",
+           x = 4.75,
+           y = 0.94,
+           label = "13,7%",
+           size = 15,
            color = "white")+
-  # Mejora de la paleta de colores con gradientes suaves
+  scale_y_continuous(labels = scales::percent_format()) +  # Escala de porcentaje en el eje Y
   scale_fill_viridis_d(option = "H") +  
   theme_minimal(base_size = 14) +  # Estilo minimalista
   theme(
@@ -397,5 +425,5 @@ ggsave("EntregaFinal/graphs/Grafico14.png",
        plot = last_plot(), 
        device = "jpg", 
        width = 18, # Tamaño: 11.5 pulgadas de ancho
-       height = 6.5, # Tamaño: 6 pulgadas de alto
+       height = 10, # Tamaño: 6 pulgadas de alto
        dpi = 900)  # Calidad: 900 pixeles por pulgada
